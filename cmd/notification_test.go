@@ -47,8 +47,27 @@ func TestNotifications(t *testing.T) {
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "notifications command should not return an error:%s", err)
 		assert.NotEmpty(t, out, "notifications command should not return an empty string")
-		assert.Containsf(t, out, "1 notifications pending", "notifications command should contain BidCos-RF.NEQ0117117:0.STICKY_UNREACH")
+		assert.Containsf(t, out, "1 notifications pending", "notifications command should one notification")
 		assert.Containsf(t, out, "WARNING", "notifications command should raise warning at >= 1")
+		t.Logf(out)
+	})
+	t.Run("notifications cmd with ignore", func(t *testing.T) {
+		args := []string{
+			"notifications",
+			"--debug",
+			"--warn", "0",
+			"--ignore", "LOW_BAT",
+			"--unit-test",
+		}
+		p := nagios.NewPlugin()
+		SetHmPlugin(p)
+		p.SkipOSExit()
+		out, err := common.CmdRun(RootCmd, args)
+		assert.NoErrorf(t, err, "notifications command should not return an error:%s", err)
+		assert.NotEmpty(t, out, "notifications command should not return an empty string")
+		assert.Containsf(t, out, "0 notifications pending", "notifications command should not contain a notification")
+		assert.Containsf(t, out, "ignoring notification: LOWBAT", "ignore should be mentioned")
+		assert.Containsf(t, out, "OK", "notifications command should  have OK")
 		t.Logf(out)
 	})
 }

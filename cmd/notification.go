@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 	"time"
 
@@ -19,18 +20,28 @@ var notificationsCmd = &cobra.Command{
 	Long: `List all current notifications. 
 You can set -w or -c to set the warning or critical threshold on notification count`,
 	SilenceUsage: true,
-	RunE:         notifications,
+	RunE:         getNotifications,
 }
 
 func init() {
+	notificationsCmd.Flags().StringP("ignore", "I", "", "regexp to ignore notifications")
 	RootCmd.AddCommand(notificationsCmd)
 }
 
-func notifications(_ *cobra.Command, _ []string) error {
+func getNotifications(cmd *cobra.Command, _ []string) error {
 	var n hmlib.SystemNotificationResponse
 	var err error
+	var reIgnoreNotifications *regexp.Regexp
 
 	log.Debug("notifications called")
+	ignore, _ := cmd.Flags().GetString("ignore")
+	if len(ignore) > 0 {
+		log.Debugf("ignore parameter: %v", ignore)
+		reIgnoreNotifications, err = regexp.Compile(ignore)
+		if err != nil {
+			return fmt.Errorf("cannot compile ignore regexp: %v", err)
+		}
+	}
 	p := GetHmPlugin()
 	_, err = hmlib.GetDeviceList("", false)
 	if err != nil {
@@ -49,6 +60,7 @@ func notifications(_ *cobra.Command, _ []string) error {
 	if err != nil {
 		return err
 	}
+	log.Debugf("ccu has %d notifications", l)
 	longOutput := ""
 	// iterate over all notifications
 	for _, e := range n.Notifications {
@@ -63,26 +75,24 @@ func notifications(_ *cobra.Command, _ []string) error {
 		nd.Address = aa[0]
 		log.Debugf("address: %s", nd.Address)
 		an, ok := hmlib.DeviceAddressMap[nd.Address]
-		log.Debugf("an: %v", an)
 		if ok {
 			nd.System = an.Name
+			log.Debugf("system name set to %s", nd.System)
 		}
-		// get state
-		s, ok := hmlib.AllIDs[id]
-		if !ok {
-			pe := fmt.Errorf("have no state for ID %s (%s)", id, e.Name)
+		nd.Name, err = getNameFromStateList(id, e)
+		if err != nil {
 			l--
-			p.Errors = append(p.Errors, pe)
+			log.Debugf("error getting name for notification: %v", err)
+			p.Errors = append(p.Errors, err)
 			continue
 		}
-		if s.Name != e.Name {
-			pe := fmt.Errorf("name mismatch for ID %s (%s)", id, e.Name)
+		o := fmt.Sprintf("%s: %s(%s) since %s\n", nd.Type, nd.Name, nd.System, nd.Since.Format(time.RFC3339))
+		if reIgnoreNotifications != nil && reIgnoreNotifications.MatchString(o) {
+			log.Debugf("ignoring notification: %s", o)
 			l--
-			p.Errors = append(p.Errors, pe)
 			continue
 		}
-		nd.Name = s.Name
-		longOutput += fmt.Sprintf("%s: %s(%s) since %s\n", nd.Type, nd.Name, nd.System, nd.Since.Format(time.RFC3339))
+		longOutput += o
 	}
 
 	// set final nagios state
@@ -94,4 +104,19 @@ func notifications(_ *cobra.Command, _ []string) error {
 
 	NagiosResult("OK", output, longOutput, perfdata)
 	return nil
+}
+
+func getNameFromStateList(id string, e hmlib.Notification) (name string, err error) {
+	// get state
+	s, ok := hmlib.AllIDs[id]
+	if !ok {
+		err = fmt.Errorf("have no state for ID %s (%s)", id, e.Name)
+		return
+	}
+	if s.Name != e.Name {
+		err = fmt.Errorf("name mismatch for ID %s (%s)", id, e.Name)
+		return
+	}
+	name = s.Name
+	return
 }
