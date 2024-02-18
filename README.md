@@ -14,7 +14,7 @@ Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic
 - install XMLAPI-Addon on your Homematic/Raspberrymatic (see https://github.com/homematic-community/XML-API#installation)
 - create a token for the XMLAPI-Addon using `tokenregister.cgi` and notice the value (see https://github.com/homematic-community/XML-API#authentication) 
 - put the binary in your nagios/icinga plugin directory
-- create a config file `check_hm.yaml` (usually in the same directory, but can be changed via flag)  with the following content
+- create a config file `check_hm.yaml` (usually in the same directory, but can be changed via flag)  with the following content or provide with flags
 ```yaml
 token: "<your token>"
 url: "https://<your ccu url>"
