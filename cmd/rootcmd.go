@@ -50,7 +50,7 @@ func init() {
 	RootCmd.PersistentFlags().BoolVarP(&unitTestFlag, "unit-test", "", false, "redirect output for unit tests")
 	RootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "C", "", "config file name")
 	RootCmd.PersistentFlags().StringVarP(&hmToken, "token", "t", "", "Homematic XMLAPI Token")
-	RootCmd.PersistentFlags().StringVarP(&hmURL, "url", "u", "https://ccu", "Homematic URL (default: https://ccu)")
+	RootCmd.PersistentFlags().StringVarP(&hmURL, "url", "u", "https://ccu", "Homematic URL")
 	RootCmd.PersistentFlags().StringVarP(&hmWarnThreshold, "warn", "w", "", "warning level")
 	RootCmd.PersistentFlags().StringVarP(&hmCritThreshold, "crit", "c", "", "critical level")
 	// don't have variables populated here
