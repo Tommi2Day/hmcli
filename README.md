@@ -1,6 +1,6 @@
 # check_hm
 
-Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic
+Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic using XMLAPI-Addon
 
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/tommi2day/check_hm)](https://goreportcard.com/report/github.com/tommi2day/check_hm)
@@ -22,7 +22,10 @@ debug: false
 ```
 - test the plugin with `check_hm device list`. It should return a list of your devices. You may enable --debug to see details
 
-## general usage
+## Configuration
+- create the your command and service definitions. For Icinga2 see [Icinga2.md](Icinga2.md) and Icinga Director basket [icinga2_basket.json](icinga2_basket.json)
+
+## general tool usage
 ```bash
 >check_hm.exe --help
 Nagios/Icinga plugin  check Homematic/Raspberrymatic status with XMLAPI
@@ -294,6 +297,9 @@ ID:6548, Name: DutyCycle, Value: 34.000000 %, INFO: DutyCycle CCU, Since:2024-02
 - [XMLAPI-Addon](https://github.com/homematic-community/XML-API)
 - [go-nagios](https://github.com/atc0005/go-nagios)
 - [Threshold Format](https://nagios-plugins.org/doc/guidelines.html#THRESHOLDFORMAT)
+- [Icinga2 configuration](Icinga2.md)
+- [Icinga2 Director Basket](icinga2_basket.json)
+
 
 
 
