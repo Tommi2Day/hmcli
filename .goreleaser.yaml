@@ -1,0 +1,100 @@
+---
+project_name: check_hm
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm
+    targets:
+      - linux_amd64
+      - linux_arm
+      - darwin_amd64
+      - windows_amd64
+    ldflags:
+      - -s -w
+      - -X {{ .ProjectName }}/cmd.Version={{.Version}}
+      - -X {{ .ProjectName }}/cmd/.Commit={{.ShortCommit}}
+      - -X {{ .ProjectName }}/cmd.Date={{ time "2006-01-02" }}
+      - -X {{ .ProjectName }}/cmd.Name={{.ProjectName}}
+
+changelog:
+  use: git
+  filters:
+    exclude:
+      - '^Merge branch'
+  groups:
+    - title: Features
+      regexp: "^.*feat[(\\w)]*:+.*$"
+      order: 0
+    - title: 'Bug fixes'
+      regexp: "^.*fix[(\\w)]*:+.*$"
+      order: 1
+    - title: 'Refactoring'
+      regexp: "^.*refactor[(\\w)]*:+.*$"
+      order: 2
+    - title: Others
+      order: 999
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
+archives:
+  - id: archive
+    format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+
+nfpms:
+  - id: deb-packages
+    # dont use {{ .ProjectName }} here :(
+    package_name: check_hm
+    file_name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    # builds:
+    license: GPL-3
+    bindir: /usr/lib/nagios/plugins
+    vendor: Tommi2Day
+    maintainer: "Tommi2Day <tommi2day@github.com>"
+    description: |-
+      Tool and Nagios/Icinga Check for Homematic CCU
+    formats:
+      - deb
+    # dependencies:
+    provides:
+      # dont use {{ .ProjectName }} here :(
+      - check_hm
+
+  - id: rpm-packages
+    # dont use {{ .ProjectName }} here :(
+    package_name: check_hm
+    file_name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    # builds:
+    maintainer: "Tommi2Day <tommi2day@github.com>"
+    description: |-
+      Tool and Nagios/Icinga Check for Homematic CCU
+    formats:
+      - rpm
+    # dependencies:
+    provides:
+      # dont use {{ .ProjectName }} here :(
+      - check_hm
+    # contents:
+
+release:
+  github:
+    owner: tommi2day
+    name: check_hm
+  replace_existing_draft: true
+  draft: true
+  header: |
+    ## Check_HM Release {{ .Tag }} ({{ time "2006-01-02" }})
+  target_commitish: '{{ .Commit }}'
