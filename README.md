@@ -155,6 +155,7 @@ Usage:
 
 Flags:
   -h, --help   help for notifications
+  -I, --ignore string   regexp to ignore notifications
 
 #-------------------
 check_hm.exe rssi --help
@@ -259,6 +260,9 @@ CONFIG_PENDING: HmIP-RF.000955699D3D84:0.CONFIG_PENDING(Bewegungsmelder Garage) 
 
  | 'notifications'=1;1;;; 'time'=2029ms;;;;
 
+>check_hm.exe notifications -I 'STICKY|PENDING' -w 1
+0 notifications pending | 'notifications'=0;1;;; 'time'=1853ms;;;;
+
 
 >check_hm.exe rssi
 Address:BidCoS-RF rx:65536 tx: -56
@@ -284,6 +288,12 @@ ID:6548, Name: DutyCycle, Value: 34.000000 %, INFO: DutyCycle CCU, Since:2024-02
  | 'DutyCycle(6548).'=34.000000;30;;; 'time'=229ms;;;;
 
 ```
+
+
+## see also
+- [XMLAPI-Addon](https://github.com/homematic-community/XML-API)
+- [go-nagios](https://github.com/atc0005/go-nagios)
+- [Threshold Format](https://nagios-plugins.org/doc/guidelines.html#THRESHOLDFORMAT)
 
 
 

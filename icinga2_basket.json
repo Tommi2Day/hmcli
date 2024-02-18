@@ -1,0 +1,321 @@
+{
+  "Command": {
+    "hm": {
+      "arguments": {
+        "(no key)": {
+          "description": "check_hm command",
+          "required": true,
+          "skip_key": true,
+          "value": "$hm_command$",
+          "order": "1"
+        },
+        "(no key.2)": {
+          "description": "check_hm Subcommand",
+          "skip_key": true,
+          "value": "$hm_subcommand$",
+          "order": "2"
+        },
+        "(no key.3)": {
+          "description": "Extra params on command line",
+          "skip_key": true,
+          "value": "$hm_extra_params$",
+          "order": "-1"
+        },
+        "-C": {
+          "description": "full name of configuration file",
+          "value": "$hm_config$"
+        },
+        "-I": {
+          "description": "regexp to ignore notifications",
+          "value": "$hm_ignore$"
+        },
+        "-a": {
+          "description": "HM Address to lookup",
+          "value": "$hm_address$"
+        },
+        "-c": {
+          "description": "Crtical value string (nagios syntax)",
+          "value": "$hm_critical$"
+        },
+        "-i": {
+          "description": "XMLAPI ise_id of device/datapoint/value",
+          "value": "$hm_id$"
+        },
+        "-n": {
+          "description": "HM Name (target depends on command)",
+          "value": "$hm_name$"
+        },
+        "-t": {
+          "description": "HM Token",
+          "value": "$hm_token$"
+        },
+        "-u": {
+          "description": "HM Base URL (e.g. http://ccu/)",
+          "value": "$hm_url$"
+        },
+        "-w": {
+          "description": "Warning Level (nagios syntax)",
+          "value": "$hm_warning$"
+        }
+      },
+      "command": "check_hm",
+      "fields": [
+        {
+          "datafield_id": 113,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 111,
+          "is_required": "y",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 106,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 108,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 116,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 109,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 115,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 114,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 110,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 112,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 105,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 104,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 107,
+          "is_required": "n",
+          "var_filter": null
+        }
+      ],
+      "is_string": false,
+      "methods_execute": "PluginCheck",
+      "object_name": "hm",
+      "object_type": "object",
+      "uuid": "eb7a8171-f016-4845-81c3-87d108709125"
+    }
+  },
+  "CommandTemplate": {
+    "Homematic": {
+      "check_command": "hm",
+      "check_interval": 900,
+      "enable_active_checks": true,
+      "enable_perfdata": true,
+      "fields": [],
+      "imports": [
+        "service-default"
+      ],
+      "object_name": "Homematic",
+      "object_type": "template",
+      "use_agent": false,
+      "uuid": "d27bfb62-1ef7-4b7a-8b27-a0e31c12f78b",
+      "vars": {
+        "hm_token": "<token>",
+        "hm_url": "http://ccu"
+      }
+    }
+  },
+  "Datafield": {
+    "113": {
+      "uuid": "f26229ff-3a78-489a-9d6b-0b4203266b04",
+      "varname": "hm_addresss",
+      "caption": "hm_address",
+      "description": "HM address Some commands may take a comma seperated list",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "check_hm"
+    },
+    "111": {
+      "uuid": "f06ee85b-9e8b-4e7b-a559-b950c92e0929",
+      "varname": "hm_command",
+      "caption": "hm_command",
+      "description": "check_hm sub command",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "check_hm"
+    },
+    "106": {
+      "uuid": "59a14db9-a752-49ba-a728-abe447672037",
+      "varname": "hm_config",
+      "caption": "hm_config",
+      "description": "path to check_hm.yaml (if created)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "check_hm"
+    },
+    "108": {
+      "uuid": "8e08c513-7a08-406d-ae31-15998319bbcb",
+      "varname": "hm_critical",
+      "caption": "hm_critical",
+      "description": "critical threshold for numeric values. Follows Nagios standard syntax (https://nagios-plugins.org/doc/guidelines.html#THRESHOLDFORMAT)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "check_hm"
+    },
+    "116": {
+      "uuid": "11018017-0eee-4ea4-8b55-8b33a8b3e4e2",
+      "varname": "hm_extra_params",
+      "caption": "hm_extra_params",
+      "description": "placeholder to handover command line options not covered by th others",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "check_hm"
+    },
+    "109": {
+      "uuid": "b0e4a4d2-5ba6-45a7-8b1a-f62c0e9b775d",
+      "varname": "hm_id",
+      "caption": "hm_id",
+      "description": "HM Identifier(ise_id) Some commands may take a comma seperated list",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "check_hm"
+    },
+    "115": {
+      "uuid": "fa6f9466-7315-4786-b963-492c6a138a6c",
+      "varname": "hm_ignore",
+      "caption": "hm_ignore",
+      "description": "regular expresion to ignore a returned value",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "check_hm"
+    },
+    "114": {
+      "uuid": "253aecab-8677-44e2-b0f2-a12732df5dd0",
+      "varname": "hm_match",
+      "caption": "hm_match",
+      "description": "regular expression to match",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "check_hm"
+    },
+    "110": {
+      "uuid": "bc2e2b46-3a13-4714-b298-927c91f0ab4e",
+      "varname": "hm_name",
+      "caption": "hm_name",
+      "description": "name of the object (vary depending on command)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "check_hm"
+    },
+    "112": {
+      "uuid": "9af2c492-78f6-47a4-b0b0-379c63fe4c59",
+      "varname": "hm_subcommand",
+      "caption": "hm_subcommand",
+      "description": "check_hm subcommand (e.g \"check\")",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "check_hm"
+    },
+    "105": {
+      "uuid": "876c01e0-6dda-4890-9cda-a96c02109adb",
+      "varname": "hm_token",
+      "caption": "hm_token",
+      "description": "XMLAPI token for acessing CCU",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "check_hm"
+    },
+    "104": {
+      "uuid": "2bafae55-29ee-49fa-8f64-b9075450cfd5",
+      "varname": "hm_url",
+      "caption": "hm_url",
+      "description": "Base URL to reach CCU (eg. https://ccu/",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "check_hm"
+    },
+    "107": {
+      "uuid": "906bf45c-f533-4a01-b17f-a7dcd265ace3",
+      "varname": "hm_warning",
+      "caption": "hm_warning",
+      "description": "warn threshold for numeric values. follows nagios standard syntax (https://nagios-plugins.org/doc/guidelines.html#THRESHOLDFORMAT)",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeString",
+      "format": null,
+      "settings": {
+        "visibility": "visible"
+      },
+      "category": "check_hm"
+    }
+  },
+  "DatafieldCategory": {
+    "check_hm": {
+      "category_name": "check_hm",
+      "description": null,
+      "originalId": "14"
+    }
+  }
+}
