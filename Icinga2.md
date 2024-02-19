@@ -10,7 +10,7 @@ You need to define
 - the service template
 - the service definitions
 
-for your convenience, a icinga director basket is available [here](icinga2_basket.json)
+for your convenience, a icinga director basket is available [here](Icinga2_basket.json)
 
 ### commands
 ```conf

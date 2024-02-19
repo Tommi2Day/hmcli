@@ -1,4 +1,4 @@
 # Changelog check_hm
 
-## [v1.0.0 - 2024-01-01]
+## [v1.1.0 - 2024-02-19]
 initial public release

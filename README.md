@@ -1,6 +1,6 @@
 # check_hm
 
-Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic using XMLAPI-Addon
+Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic based on XMLAPI AddOn
 
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/tommi2day/check_hm)](https://goreportcard.com/report/github.com/tommi2day/check_hm)
@@ -14,21 +14,19 @@ Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic using XMLAPI-Ad
 - install XMLAPI-Addon on your Homematic/Raspberrymatic (see https://github.com/homematic-community/XML-API#installation)
 - create a token for the XMLAPI-Addon using `tokenregister.cgi` and notice the value (see https://github.com/homematic-community/XML-API#authentication) 
 - put the binary in your nagios/icinga plugin directory
-- create a config file `check_hm.yaml` (usually in the same directory, but can be changed via flag)  with the following content or provide with flags
-```yaml
-token: "<your token>"
-url: "https://<your ccu url>"
-debug: false
-```
-- test the plugin with `check_hm device list`. It should return a list of your devices. You may enable --debug to see details
+  you may create a config file `check_hm.yaml` (usually in the same directory,$HOME/.check_hm or /etc/nagios-plugins/config or provide full path via --config flag)
+  with the content  in [check_hm.yaml](check_hm_config.yaml) and modify for your site. You may provide all thes flags also on the command line
+- test the plugin with `check_hm version --debug` to see if the correct config file has been taken  and `check_hm device list` to see if your CCU access is working.
+  It should return a list of your devices. You may enable --debug to see details
 
 ## Configuration
-- create the your command and service definitions. For Icinga2 see [Icinga2.md](Icinga2.md) and Icinga Director basket [icinga2_basket.json](icinga2_basket.json)
+- create the your command and service definitions as usual. For Icinga2 see special hints in [Icinga2.md](Icinga2.md) and Icinga Director configuration basket [Icinga2_basket.json](Icinga2_basket.json)
+- to define a service, you have usually provide the ise_id (--id flag) of your devices, datapoints or system variables. You can get them with `check_hm device list` or `check_hm datapoint list` or `check_hm sysvar list`
 
-## general tool usage
+## check_hm tool reference
 ```bash
->check_hm.exe --help
-Nagios/Icinga plugin  check Homematic/Raspberrymatic status with XMLAPI
+>check_hm --help
+Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic based on XMLAPI AddOn
 
 Usage:
   check_hm [command]
@@ -76,7 +74,7 @@ Flags:
   -h, --help           help for list
   -m, --match string   list data points with name matching regexp
 #-------------------
->check_hm.exe  datapoint check --help
+>check_hm  datapoint check --help
 select a single datapoint by name or id and check its value
 You can set -w or -c to set the warning or critical threshold on numeric values
 
@@ -90,7 +88,7 @@ Flags:
   -n, --name string    datapoint name(one) to query
 
 #-------------------
->check_hm.exe  devices list --help
+>check_hm  devices list --help
 list all devices or a specify one
 
 Usage:
@@ -121,7 +119,7 @@ Available Commands:
 Flags:
   -h, --help   help for value
 #-------------------
-ccheck_hm.exe  mastervalue list --help
+>check_hm  mastervalue list --help
 List for a given device all mastervalues  or a named value. 
 Address or id must be given
 
@@ -135,7 +133,7 @@ Flags:
   -n, --name string      requested mastervalue names, comma separated
 
 #-------------------
-check_hm.exe  mastervalue check --help
+>check_hm  mastervalue check --help
 this retrives a given device mastervalue and may check if it contains a string (-m)
 You can set -w or -c to set the warning or critical threshold on numeric values
 
@@ -149,7 +147,7 @@ Flags:
   -m, --match string     returned master value must match this regexp
   -n, --name string      requested master value (not device) name ( only one)
 #-------------------
-check_hm.exe notifications --help
+>check_hm notifications --help
 List all current notifications. 
 You can set -w or -c to set the warning or critical threshold on notification count
 
@@ -161,7 +159,7 @@ Flags:
   -I, --ignore string   regexp to ignore notifications
 
 #-------------------
-check_hm.exe rssi --help
+>check_hm rssi --help
 List available rssi values of devices
 
 Usage:
@@ -171,7 +169,7 @@ Flags:
   -h, --help   help for rssi
 
 #-------------------
-check_hm.exe sysvar --help
+>check_hm sysvar --help
 command related to system variables
 
 Usage:
@@ -190,7 +188,7 @@ Usage:
 Flags:
   -h, --help   help for list
 #-------------------
-check_hm.exe sysvar check --help
+>check_hm sysvar check --help
 select a single system variable by name or id and check its value
 
 Usage:
@@ -204,9 +202,10 @@ Flags:
 
 ```
 
-## Examples
+## check_hm examples
 ```bash
-> check_hm.exe datapoint list --match "000955699D3D84"
+# list datapoints of a device (using regexp). omit --match to see all
+>check_hm datapoint list --match "000955699D3D84"
 Device: Bewegungsmelder Garage Channel: Bewegungsmelder Garage:0 Datapoint: HmIP-RF.000955699D3D84:0.CONFIG_PENDING(4742) = true 
 Device: Bewegungsmelder Garage Channel: Bewegungsmelder Garage:0 Datapoint: HmIP-RF.000955699D3D84:0.DUTY_CYCLE(4746) = false 
 Device: Bewegungsmelder Garage Channel: Bewegungsmelder Garage:0 Datapoint: HmIP-RF.000955699D3D84:0.ERROR_CODE(4747) = 0
@@ -216,16 +215,19 @@ Device: Bewegungsmelder Garage Channel: Bewegungsmelder Garage Datapoint: HmIP-R
 Device: Bewegungsmelder Garage Channel: Bewegungsmelder Garage Datapoint: HmIP-RF.000955699D3D84:1.CURRENT_ILLUMINATION_STATUS(7800) = 0
 Device: Bewegungsmelder Garage Channel: Bewegungsmelder Garage Datapoint: HmIP-RF.000955699D3D84:1.ILLUMINATION_STATUS(7801) = 0
 
->check_hm.exe datapoint check --name HmIP-RF.000955699D3D84:0.LOW_BAT --match "true"
+# check a single datapoint (using exact name) and set warning level if value is not "true"
+>check_hm datapoint check --name HmIP-RF.000955699D3D84:0.LOW_BAT --match "true"
 CRITICAL: HmIP-RF.000955699D3D84:0.LOW_BAT returned value 'false', does not match 'true' 
 
 Datapoint:HmIP-RF.000955699D3D84:0.LOW_BAT ID:4748 Value:=false
  | 'time'=847ms;;;;
 
->check_hm.exe device list --name "Bewegungsmelder Garage"
+# list devices by name (omit --name to see all)
+>check_hm device list --name "Bewegungsmelder Garage"
 ID:4740, Name: Bewegungsmelder Garage, Address: 000955699D3D84, Type: HmIP-SMO
 
->check_hm.exe mastervalues list --id="4740"
+# list master values of a device by id (id or name required)
+>check_hm mastervalues list --id="4740"
 Device (ID=4740): Bewegungsmelder Garage, Type: HmIP-SMO
   ARR_TIMEOUT=10
   CYCLIC_BIDI_INFO_MSG_DISCARD_FACTOR=1
@@ -240,6 +242,7 @@ Device (ID=4740): Bewegungsmelder Garage, Type: HmIP-SMO
   LOCAL_RESET_DISABLED=0
   LOW_BAT_LIMIT=2.200000
 
+# check a single master value (usinng id) and set warning level if value is  >=9
 >xheck_hm.exe mastervalues check --id 4740 --name ARR_TIMEOUT -w 9
 ARR_TIMEOUT=10 
 **THRESHOLDS**
@@ -251,6 +254,7 @@ ARR_TIMEOUT=10
 Device:4740 ID:Bewegungsmelder Garage ValueName:ARR_TIMEOUT=10
  | 'Bewegungsmelder Garage(4740).ARR_TIMEOUT'=10;9;;; 'time'=156ms;;;;
  
+# check notifications and warn if there is one or more pending
 >check_hm.exe notifications -w 1
 1 notifications pending 
 **THRESHOLDS**
@@ -263,15 +267,17 @@ CONFIG_PENDING: HmIP-RF.000955699D3D84:0.CONFIG_PENDING(Bewegungsmelder Garage) 
 
  | 'notifications'=1;1;;; 'time'=2029ms;;;;
 
+# check notifications as before, but ignore sticky and config pending notifications
 >check_hm.exe notifications -I 'STICKY|PENDING' -w 1
 0 notifications pending | 'notifications'=0;1;;; 'time'=1853ms;;;;
 
-
+# list rssi values of devices
 >check_hm.exe rssi
 Address:BidCoS-RF rx:65536 tx: -56
 Address:KEQ1070683 rx:65536 tx: -73
 Address:MEQ0272433 rx:65536 tx: -58
 
+# list system variables and find id of a variable
 >check_hm.exe sysvar list
 ID:7931, Name: DutyCycle-Alarm, Value: nicht ausgelöst, INFO: DutyCycle 98% (CCU)
 ID:7794, Name: WatchDog-Alarm, Value: nicht ausgelöst, INFO: Unclean shutdown or system crash identified
@@ -279,6 +285,8 @@ ID:1233, Name: Alarmzone 1, Value: ausgelöst, INFO: Alarmmeldung Alarmzone 1, S
 ID:950, Name: Anwesenheit, Value: anwesend, INFO: Anwesenheit, Since:2024-01-31 21:33:04
 ID:6548, Name: DutyCycle, Value: 36.000000 %, INFO: DutyCycle CCU, Since:2024-02-17 21:54:00
 
+# check HM DutyCyle variable and set warning level if value is >=30
+# DutyCycle needs to be published by removing the "internal" flag in CCU Systemvariables settings
 >check_hm.exe sysvar check --id 6548 -w 30
 DutyCycle=34.000000 (%) 
 **THRESHOLDS**
@@ -294,11 +302,15 @@ ID:6548, Name: DutyCycle, Value: 34.000000 %, INFO: DutyCycle CCU, Since:2024-02
 
 
 ## see also
+- [RaspberryMatic](https://github.com/jens-maus/RaspberryMatic)
 - [XMLAPI-Addon](https://github.com/homematic-community/XML-API)
+- [gomodules/hmlib](https://pkg.go.dev/github.com/tommi2day/gomodules/hmlib)
 - [go-nagios](https://github.com/atc0005/go-nagios)
 - [Threshold Format](https://nagios-plugins.org/doc/guidelines.html#THRESHOLDFORMAT)
+- [Icinga2](https://icinga.com/docs/icinga-2/latest/doc/03-monitoring-basics/)
+- [Icinga2 Director](https://github.com/Icinga/icingaweb2-module-director)
 - [Icinga2 configuration](Icinga2.md)
-- [Icinga2 Director Basket](icinga2_basket.json)
+- [Icinga2 Director Basket](Icinga2_basket.json)
 
 
 
