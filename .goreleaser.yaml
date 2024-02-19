@@ -19,7 +19,7 @@ builds:
     ldflags:
       - -s -w
       - -X {{ .ProjectName }}/cmd.Version={{.Version}}
-      - -X {{ .ProjectName }}/cmd/.Commit={{.ShortCommit}}
+      - -X {{ .ProjectName }}/cmd.Commit={{.ShortCommit}}
       - -X {{ .ProjectName }}/cmd.Date={{ time "2006-01-02" }}
       - -X {{ .ProjectName }}/cmd.Name={{.ProjectName}}
 
@@ -45,7 +45,7 @@ checksum:
   name_template: 'checksums.txt'
 
 snapshot:
-  name_template: "{{ incpatch .Version }}-next"
+  name_template: "{{ incpatch .Version }}-beta"
 
 archives:
   - id: archive
@@ -53,9 +53,17 @@ archives:
     format_overrides:
       - goos: windows
         format: zip
+    files:
+      - Icinga2_basket.json
+      - "*.md"
+      - LICENSE
+      - src: check_hm_config.yaml
+        dst: check_hm.yaml
+    strip_parent_binary_folder: true
 
 nfpms:
-  - id: deb-packages
+  -
+    id: packages
     # dont use {{ .ProjectName }} here :(
     package_name: check_hm
     file_name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
@@ -65,29 +73,30 @@ nfpms:
     vendor: Tommi2Day
     maintainer: "Tommi2Day <tommi2day@github.com>"
     description: |-
-      Tool and Nagios/Icinga Check for Homematic CCU
+      Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic based on XMLAPI AddOn
     formats:
+      - rpm
       - deb
     # dependencies:
     provides:
       # dont use {{ .ProjectName }} here :(
       - check_hm
+    contents:
+      - src: "*.md"
+        dst: /usr/share/doc/{{ .ProjectName }}/
+      - src: Icinga2_basket.json
+        dst: /usr/share/doc/{{ .ProjectName }}/Icinga2_basket.json
+      - src: LICENSE
+        dst: /usr/share/doc/{{ .ProjectName }}/LICENSE
+      - src: check_hm_config.yaml
+        dst: /usr/share/doc/{{ .ProjectName }}/check_hm.yaml
+      - src: check_hm_config.yaml
+        dst: /etc/nagios-plugins/config/check_hm.yaml
+        type: config
+      - src: /usr/lib/nagios/plugins/check_hm
+        dst: /usr/bin/check_hm
+        type: "symlink"
 
-  - id: rpm-packages
-    # dont use {{ .ProjectName }} here :(
-    package_name: check_hm
-    file_name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
-    # builds:
-    maintainer: "Tommi2Day <tommi2day@github.com>"
-    description: |-
-      Tool and Nagios/Icinga Check for Homematic CCU
-    formats:
-      - rpm
-    # dependencies:
-    provides:
-      # dont use {{ .ProjectName }} here :(
-      - check_hm
-    # contents:
 
 release:
   github:
