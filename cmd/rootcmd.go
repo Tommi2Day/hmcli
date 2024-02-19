@@ -8,6 +8,8 @@ import (
 
 	"github.com/tommi2day/gomodules/hmlib"
 
+	"github.com/ory/dockertest/v3/docker/pkg/homedir"
+
 	"github.com/tommi2day/gomodules/common"
 
 	log "github.com/sirupsen/logrus"
@@ -28,8 +30,8 @@ var (
 	// RootCmd entry point to start
 	RootCmd = &cobra.Command{
 		Use:           "check_hm",
-		Short:         "check_hm – Check Homematic Health Monitor",
-		Long:          `Nagios/Icinga plugin  check Homematic/Raspberrymatic status with XMLAPI`,
+		Short:         "check_hm – Homematic Data Tool",
+		Long:          `Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic based on XMLAPI-Addon`,
 		SilenceErrors: true,
 	}
 )
@@ -50,7 +52,7 @@ func init() {
 	RootCmd.PersistentFlags().BoolVarP(&unitTestFlag, "unit-test", "", false, "redirect output for unit tests")
 	RootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "C", "", "config file name")
 	RootCmd.PersistentFlags().StringVarP(&hmToken, "token", "t", "", "Homematic XMLAPI Token")
-	RootCmd.PersistentFlags().StringVarP(&hmURL, "url", "u", "https://ccu", "Homematic URL")
+	RootCmd.PersistentFlags().StringVarP(&hmURL, "url", "u", "http://ccu", "Homematic URL")
 	RootCmd.PersistentFlags().StringVarP(&hmWarnThreshold, "warn", "w", "", "warning level")
 	RootCmd.PersistentFlags().StringVarP(&hmCritThreshold, "crit", "c", "", "critical level")
 	// don't have variables populated here
@@ -73,10 +75,12 @@ func Execute() {
 func initConfig() {
 	viper.SetConfigType(configType)
 	viper.SetConfigName(configName)
-	viper.SetConfigFile(configName + "." + configType)
+	home := homedir.Get()
 	if cfgFile == "" {
-		// Search config in $HOME/etc and current directory.
+		// Search config in /etc/nagios-plugins/config $HOME/.check_hm and current directory.
 		viper.AddConfigPath(".")
+		viper.AddConfigPath(home + "/.check_hm")
+		viper.AddConfigPath("/etc/nagios-plugins/config")
 	} else {
 		// set filename form cli
 		viper.SetConfigFile(cfgFile)
@@ -85,7 +89,6 @@ func initConfig() {
 	// env var overrides
 	viper.AutomaticEnv() // read in environment variables that match
 	viper.SetEnvPrefix(configEnvPrefix)
-	// env var `LDAP_USERNAME` will be mapped to `ldap.username`
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
 	// If a config file is found, read it in.
