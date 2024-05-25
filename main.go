@@ -2,7 +2,7 @@
 package main
 
 import (
-	"check_hm/cmd"
+	"github.com/tommi2day/check_hm/cmd"
 )
 
 func main() {

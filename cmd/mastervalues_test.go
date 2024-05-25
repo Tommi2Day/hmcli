@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"check_hm/test"
+	"github.com/tommi2day/check_hm/test"
 	"testing"
 
 	"github.com/atc0005/go-nagios"
