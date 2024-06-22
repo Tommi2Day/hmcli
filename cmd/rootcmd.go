@@ -29,9 +29,9 @@ var (
 
 	// RootCmd entry point to start
 	RootCmd = &cobra.Command{
-		Use:           "check_hm",
-		Short:         "check_hm – Homematic Data Tool",
-		Long:          `Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic based on XMLAPI-Addon`,
+		Use:           "hmcli",
+		Short:         "hmcli – Homematic Command Line and Icinga compatible Monitoring Tool",
+		Long:          `Query Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic with XMLAPI`,
 		SilenceErrors: true,
 	}
 )
@@ -41,8 +41,8 @@ const (
 	// env APP_MY_VAR = "MY_VALUE"
 	// e.g. export APP_LDAP_USERNAME test
 	// maps to ldap.username
-	configEnvPrefix = "CHECK_HM"
-	configName      = "check_hm"
+	configEnvPrefix = "HMCLI"
+	configName      = "hmcli"
 	configType      = "yaml"
 )
 
@@ -77,9 +77,9 @@ func initConfig() {
 	viper.SetConfigName(configName)
 	home := homedir.Get()
 	if cfgFile == "" {
-		// Search config in /etc/nagios-plugins/config $HOME/.check_hm and current directory.
+		// Search config in /etc/nagios-plugins/config $HOME/.hmcli and current directory.
 		viper.AddConfigPath(".")
-		viper.AddConfigPath(home + "/.check_hm")
+		viper.AddConfigPath(home + "/.hmcli")
 		viper.AddConfigPath("/etc/nagios-plugins/config")
 	} else {
 		// set filename form cli
@@ -103,6 +103,7 @@ func initConfig() {
 		// report function name
 		log.SetReportCaller(true)
 		log.SetLevel(log.DebugLevel)
+		hmlib.SetDebug(true)
 	}
 
 	logFormatter := &prefixed.TextFormatter{

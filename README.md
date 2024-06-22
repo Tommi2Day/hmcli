@@ -1,12 +1,12 @@
-# check_hm
+# hmcli
 
 Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic based on XMLAPI AddOn
 
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/tommi2day/check_hm)](https://goreportcard.com/report/github.com/tommi2day/check_hm)
-![CI](https://github.com/tommi2day/check_hm/actions/workflows/main.yml/badge.svg)
-[![codecov](https://codecov.io/gh/Tommi2Day/check_hm/branch/main/graph/badge.svg?token=3EBK75VLC8)](https://codecov.io/gh/Tommi2Day/check_hm)
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/tommi2day/check_hm)
+[![Go Report Card](https://goreportcard.com/badge/github.com/tommi2day/hmcli)](https://goreportcard.com/report/github.com/tommi2day/hmcli)
+![CI](https://github.com/tommi2day/hmcli/actions/workflows/main.yml/badge.svg)
+[![codecov](https://codecov.io/gh/Tommi2Day/hmcli/branch/main/graph/badge.svg?token=3EBK75VLC8)](https://codecov.io/gh/Tommi2Day/hmcli)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/tommi2day/hmcli)
 
 
 
@@ -14,22 +14,22 @@ Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic based on XMLAPI
 - install XMLAPI-Addon on your Homematic/Raspberrymatic (see https://github.com/homematic-community/XML-API#installation)
 - create a token for the XMLAPI-Addon using `tokenregister.cgi` and notice the value (see https://github.com/homematic-community/XML-API#authentication) 
 - put the binary in your nagios/icinga plugin directory
-  you may create a config file `check_hm.yaml` (usually in the same directory,$HOME/.check_hm or /etc/nagios-plugins/config or provide full path via --config flag)
-  with the content  in [check_hm.yaml](check_hm_config.yaml) and modify for your site. You may provide all thes flags also on the command line
-- test the plugin with `check_hm version --debug` to see if the correct config file has been taken  and `check_hm device list` to see if your CCU access is working.
-  It should return a list of your devices. You may enable --debug to see details
+- you may create a config file `hmcli.yaml` (usually in the same directory,$HOME/.hmcli or /etc/nagios-plugins/config or provide full path via --config flag) 
+with the content  in [hmcli.yaml](hmcli_config.yaml) and modify for your site. You may provide all thes flags also on the command line
+- test the plugin with `hmcli version --debug` to see if the correct config file has been taken  and `hmcli device list` to see if your CCU access is working. 
+It should return a list of your devices. You may enable --debug to see details
 
 ## Configuration
 - create the your command and service definitions as usual. For Icinga2 see special hints in [Icinga2.md](Icinga2.md) and Icinga Director configuration basket [Icinga2_basket.json](Icinga2_basket.json)
-- to define a service, you have usually provide the ise_id (--id flag) of your devices, datapoints or system variables. You can get them with `check_hm device list` or `check_hm datapoint list` or `check_hm sysvar list`
+- to define a service, you have usually provide the ise_id (--id flag) of your devices, datapoints or system variables. You can get them with `hmcli device list` or `hmcli datapoint list` or `hmcli sysvar list`
 
-## check_hm tool reference
+## hmcli tool reference
 ```bash
->check_hm --help
-Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic based on XMLAPI AddOn
+>hmcli --help
+Query Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic with XMLAPI
 
 Usage:
-  check_hm [command]
+  hmcli [command]
 
 Available Commands:
   completion    Generate the autocompletion script for the specified shell
@@ -46,40 +46,40 @@ Flags:
   -C, --config string   config file name
   -c, --crit string     critical level
   -d, --debug           verbose debug output
-  -h, --help            help for check_hm
+  -h, --help            help for hmcli
   -t, --token string    Homematic XMLAPI Token
       --unit-test       redirect output for unit tests
   -u, --url string      Homematic URL (default: https://ccu) (default "https://ccu")
   -w, --warn string     warning level
 
 #-------------------
->check_hm datapoint
+>hmcli datapoint
 command related to datapoints
 
 Usage:
-  check_hm datapoint [command]
+  hmcli datapoint [command]
 
 Available Commands:
   check       check a single datapoint
   list        List all data points for a device
 
 #-------------------
-check_hm datapoint list --help
+hmcli datapoint list --help
 List all data points for a device
 
 Usage:
-  check_hm datapoint list [flags]
+  hmcli datapoint list [flags]
 
 Flags:
   -h, --help           help for list
   -m, --match string   list data points with name matching regexp
 #-------------------
->check_hm  datapoint check --help
+>hmcli  datapoint check --help
 select a single datapoint by name or id and check its value
 You can set -w or -c to set the warning or critical threshold on numeric values
 
 Usage:
-  check_hm datapoint check [flags]
+  hmcli datapoint check [flags]
 
 Flags:
   -h, --help           help for check
@@ -88,11 +88,11 @@ Flags:
   -n, --name string    datapoint name(one) to query
 
 #-------------------
->check_hm  devices list --help
+>hmcli  devices list --help
 list all devices or a specify one
 
 Usage:
-  check_hm device list [flags]
+  hmcli device list [flags]
 
 Flags:
   -a, --address string   device addresses to query, comma separated
@@ -103,11 +103,11 @@ Flags:
 
 #-------------------
 
->check_hm mastervalue
+>hmcli mastervalue
 command related to device master values
 
 Usage:
-  check_hm value [command]
+  hmcli value [command]
 
 Aliases:
   value, values, mastervalue, mastervalues
@@ -119,12 +119,12 @@ Available Commands:
 Flags:
   -h, --help   help for value
 #-------------------
->check_hm  mastervalue list --help
+>hmcli  mastervalue list --help
 List for a given device all mastervalues  or a named value. 
 Address or id must be given
 
 Usage:
-  check_hm value list [flags]
+  hmcli value list [flags]
 
 Flags:
   -a, --address string   device addresses to query, comma separated
@@ -133,12 +133,12 @@ Flags:
   -n, --name string      requested mastervalue names, comma separated
 
 #-------------------
->check_hm  mastervalue check --help
+>hmcli  mastervalue check --help
 this retrives a given device mastervalue and may check if it contains a string (-m)
 You can set -w or -c to set the warning or critical threshold on numeric values
 
 Usage:
-  check_hm value check [flags]
+  hmcli value check [flags]
 
 Flags:
   -a, --address string   device address (only one) to query, alternative to id
@@ -147,52 +147,52 @@ Flags:
   -m, --match string     returned master value must match this regexp
   -n, --name string      requested master value (not device) name ( only one)
 #-------------------
->check_hm notifications --help
+>hmcli notifications --help
 List all current notifications. 
 You can set -w or -c to set the warning or critical threshold on notification count
 
 Usage:
-  check_hm notifications [flags]
+  hmcli notifications [flags]
 
 Flags:
   -h, --help   help for notifications
   -I, --ignore string   regexp to ignore notifications
 
 #-------------------
->check_hm rssi --help
+>hmcli rssi --help
 List available rssi values of devices
 
 Usage:
-  check_hm rssi [flags]
+  hmcli rssi [flags]
 
 Flags:
   -h, --help   help for rssi
 
 #-------------------
->check_hm sysvar --help
+>hmcli sysvar --help
 command related to system variables
 
 Usage:
-  check_hm sysvar [command]
+  hmcli sysvar [command]
 
 Available Commands:
   check       check a single system variable
   list        List all system variables
 #-------------------
-check_hm.exe sysvar list --help
+hmcli.exe sysvar list --help
 List all system variables
 
 Usage:
-  check_hm sysvar list [flags]
+  hmcli sysvar list [flags]
 
 Flags:
   -h, --help   help for list
 #-------------------
->check_hm sysvar check --help
+>hmcli sysvar check --help
 select a single system variable by name or id and check its value
 
 Usage:
-  check_hm sysvar check [flags]
+  hmcli sysvar check [flags]
 
 Flags:
   -h, --help           help for check
@@ -202,10 +202,10 @@ Flags:
 
 ```
 
-## check_hm examples
+## hmcli examples
 ```bash
 # list datapoints of a device (using regexp). omit --match to see all
->check_hm datapoint list --match "000955699D3D84"
+>hmcli datapoint list --match "000955699D3D84"
 Device: Bewegungsmelder Garage Channel: Bewegungsmelder Garage:0 Datapoint: HmIP-RF.000955699D3D84:0.CONFIG_PENDING(4742) = true 
 Device: Bewegungsmelder Garage Channel: Bewegungsmelder Garage:0 Datapoint: HmIP-RF.000955699D3D84:0.DUTY_CYCLE(4746) = false 
 Device: Bewegungsmelder Garage Channel: Bewegungsmelder Garage:0 Datapoint: HmIP-RF.000955699D3D84:0.ERROR_CODE(4747) = 0
@@ -216,18 +216,18 @@ Device: Bewegungsmelder Garage Channel: Bewegungsmelder Garage Datapoint: HmIP-R
 Device: Bewegungsmelder Garage Channel: Bewegungsmelder Garage Datapoint: HmIP-RF.000955699D3D84:1.ILLUMINATION_STATUS(7801) = 0
 
 # check a single datapoint (using exact name) and set warning level if value is not "true"
->check_hm datapoint check --name HmIP-RF.000955699D3D84:0.LOW_BAT --match "true"
+>hmcli datapoint check --name HmIP-RF.000955699D3D84:0.LOW_BAT --match "true"
 CRITICAL: HmIP-RF.000955699D3D84:0.LOW_BAT returned value 'false', does not match 'true' 
 
 Datapoint:HmIP-RF.000955699D3D84:0.LOW_BAT ID:4748 Value:=false
  | 'time'=847ms;;;;
 
 # list devices by name (omit --name to see all)
->check_hm device list --name "Bewegungsmelder Garage"
+>hmcli device list --name "Bewegungsmelder Garage"
 ID:4740, Name: Bewegungsmelder Garage, Address: 000955699D3D84, Type: HmIP-SMO
 
 # list master values of a device by id (id or name required)
->check_hm mastervalues list --id="4740"
+>hmcli mastervalues list --id="4740"
 Device (ID=4740): Bewegungsmelder Garage, Type: HmIP-SMO
   ARR_TIMEOUT=10
   CYCLIC_BIDI_INFO_MSG_DISCARD_FACTOR=1
@@ -255,7 +255,7 @@ Device:4740 ID:Bewegungsmelder Garage ValueName:ARR_TIMEOUT=10
  | 'Bewegungsmelder Garage(4740).ARR_TIMEOUT'=10;9;;; 'time'=156ms;;;;
  
 # check notifications and warn if there is one or more pending
->check_hm.exe notifications -w 1
+>hmcli.exe notifications -w 1
 1 notifications pending 
 **THRESHOLDS**
 
@@ -268,17 +268,17 @@ CONFIG_PENDING: HmIP-RF.000955699D3D84:0.CONFIG_PENDING(Bewegungsmelder Garage) 
  | 'notifications'=1;1;;; 'time'=2029ms;;;;
 
 # check notifications as before, but ignore sticky and config pending notifications
->check_hm.exe notifications -I 'STICKY|PENDING' -w 1
+>hmcli.exe notifications -I 'STICKY|PENDING' -w 1
 0 notifications pending | 'notifications'=0;1;;; 'time'=1853ms;;;;
 
 # list rssi values of devices
->check_hm.exe rssi
+>hmcli.exe rssi
 Address:BidCoS-RF rx:65536 tx: -56
 Address:KEQ1070683 rx:65536 tx: -73
 Address:MEQ0272433 rx:65536 tx: -58
 
 # list system variables and find id of a variable
->check_hm.exe sysvar list
+>hmcli.exe sysvar list
 ID:7931, Name: DutyCycle-Alarm, Value: nicht ausgelöst, INFO: DutyCycle 98% (CCU)
 ID:7794, Name: WatchDog-Alarm, Value: nicht ausgelöst, INFO: Unclean shutdown or system crash identified
 ID:1233, Name: Alarmzone 1, Value: ausgelöst, INFO: Alarmmeldung Alarmzone 1, Since:2024-02-17 19:15:22
@@ -287,7 +287,7 @@ ID:6548, Name: DutyCycle, Value: 36.000000 %, INFO: DutyCycle CCU, Since:2024-02
 
 # check HM DutyCyle variable and set warning level if value is >=30
 # DutyCycle needs to be published by removing the "internal" flag in CCU Systemvariables settings
->check_hm.exe sysvar check --id 6548 -w 30
+>hmcli.exe sysvar check --id 6548 -w 30
 DutyCycle=34.000000 (%) 
 **THRESHOLDS**
 

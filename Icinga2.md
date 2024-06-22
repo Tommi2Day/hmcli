@@ -1,6 +1,6 @@
 # Icinga2 configuration
 
-These are simple examples how to use the check_hm plugin with Icinga2.
+These are simple examples how to use the hmcli plugin with Icinga2.
 
 ## Definitions
 
@@ -16,17 +16,17 @@ for your convenience, a icinga director basket is available [here](Icinga2_baske
 ```conf
 object CheckCommand "hm" {
     import "plugin-check-command"
-    command = [ PluginDir + "/check_hm" ]
+    command = [ PluginDir + "/hmcli" ]
     arguments += {
         "(no key)" = {
-            description = "check_hm command"
+            description = "hmcli command"
             order = 1
             required = true
             skip_key = true
             value = "$hm_command$"
         }
         "(no key.2)" = {
-            description = "check_hm Subcommand"
+            description = "hmcli Subcommand"
             order = 2
             skip_key = true
             value = "$hm_subcommand$"

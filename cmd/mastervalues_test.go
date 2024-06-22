@@ -3,7 +3,7 @@ package cmd
 import (
 	"testing"
 
-	"github.com/tommi2day/check_hm/test"
+	"github.com/tommi2day/hmcli/test"
 
 	"github.com/atc0005/go-nagios"
 	"github.com/go-resty/resty/v2"

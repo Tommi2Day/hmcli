@@ -1,5 +1,5 @@
 ---
-project_name: check_hm
+project_name: hmcli
 
 builds:
   - env:
@@ -54,18 +54,17 @@ archives:
       - goos: windows
         format: zip
     files:
-      - Icinga2_basket.json
-      - "*.md"
-      - LICENSE
-      - src: check_hm_config.yaml
-        dst: check_hm.yaml
-    strip_parent_binary_folder: true
+        - Icinga2_basket.json
+        - "*.md"
+        - LICENSE
+        - src: hmcli_config.yaml
+          dst: hmcli.yaml
 
 nfpms:
   -
     id: packages
     # dont use {{ .ProjectName }} here :(
-    package_name: check_hm
+    package_name: hmcli
     file_name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     # builds:
     license: GPL-3
@@ -73,13 +72,15 @@ nfpms:
     vendor: Tommi2Day
     maintainer: "Tommi2Day <tommi2day@github.com>"
     description: |-
-      Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic based on XMLAPI AddOn
+      Query Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic with XMLAPI
     formats:
       - rpm
       - deb
     # dependencies:
     provides:
       # dont use {{ .ProjectName }} here :(
+      - hmcli
+    replaces:
       - check_hm
     contents:
       - src: "*.md"
@@ -88,22 +89,22 @@ nfpms:
         dst: /usr/share/doc/{{ .ProjectName }}/Icinga2_basket.json
       - src: LICENSE
         dst: /usr/share/doc/{{ .ProjectName }}/LICENSE
-      - src: check_hm_config.yaml
-        dst: /usr/share/doc/{{ .ProjectName }}/check_hm.yaml
-      - src: check_hm_config.yaml
-        dst: /etc/nagios-plugins/config/check_hm.yaml
+      - src: hmcli_config.yaml
+        dst: /usr/share/doc/{{ .ProjectName }}/hmcli.yaml
+      - src: hmcli_config.yaml
+        dst: /etc/nagios-plugins/config/hmcli.yaml
         type: config
-      - src: /usr/lib/nagios/plugins/check_hm
-        dst: /usr/bin/check_hm
+      - src: /usr/lib/nagios/plugins/hmcli
+        dst: /usr/bin/hmcli
         type: "symlink"
 
 
 release:
   github:
     owner: tommi2day
-    name: check_hm
+    name: hmcli
   replace_existing_draft: true
   draft: true
   header: |
-    ## Check_HM Release {{ .Tag }} ({{ time "2006-01-02" }})
+    ## hmcli Release {{ .Tag }} ({{ time "2006-01-02" }})
   target_commitish: '{{ .Commit }}'

@@ -3,7 +3,7 @@ package cmd
 import (
 	"testing"
 
-	"github.com/tommi2day/check_hm/test"
+	"github.com/tommi2day/hmcli/test"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/jarcoal/httpmock"
