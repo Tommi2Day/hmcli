@@ -7,6 +7,7 @@ import (
 	"github.com/atc0005/go-nagios"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+	"github.com/tommi2day/gomodules/common"
 	"github.com/tommi2day/gomodules/hmlib"
 )
 
@@ -238,7 +239,7 @@ func mastervalueCheck(cmd *cobra.Command, _ []string) error {
 	output := fmt.Sprintf("%s=%s", n, v)
 
 	// prepare performance data only for numeric values
-	preparePD := isNumeric(v)
+	preparePD := common.IsNumeric(v)
 	log.Debugf("value is numeric: %v", preparePD)
 	var performanceData []nagios.PerformanceData
 	if preparePD {

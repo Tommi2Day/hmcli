@@ -67,7 +67,7 @@ func TestSysvar(t *testing.T) {
 		}
 
 		p := nagios.NewPlugin()
-		SetHmPlugin(p)
+		SetPlugin(p)
 		p.SkipOSExit()
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "sysvars command should not return an error:%s", err)
@@ -97,7 +97,7 @@ func TestSysvar(t *testing.T) {
 		}
 
 		p := nagios.NewPlugin()
-		SetHmPlugin(p)
+		SetPlugin(p)
 		p.SkipOSExit()
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "sysvars command should not return an error:%s", err)

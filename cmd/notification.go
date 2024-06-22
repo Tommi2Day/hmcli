@@ -42,7 +42,7 @@ func getNotifications(cmd *cobra.Command, _ []string) error {
 			return fmt.Errorf("cannot compile ignore regexp: %v", err)
 		}
 	}
-	p := GetHmPlugin()
+	p := GetPlugin()
 	_, err = hmlib.GetDeviceList("", false)
 	if err != nil {
 		return err

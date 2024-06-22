@@ -74,7 +74,7 @@ func TestMasterValues(t *testing.T) {
 		}
 		p := nagios.NewPlugin()
 		p.SkipOSExit()
-		SetHmPlugin(p)
+		SetPlugin(p)
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "mastervalues command should not return an error:%s", err)
 		assert.NotEmpty(t, out, "mastervalues command should not return an empty string")
@@ -97,7 +97,7 @@ func TestMasterValues(t *testing.T) {
 		}
 		p := nagios.NewPlugin()
 		p.SkipOSExit()
-		SetHmPlugin(p)
+		SetPlugin(p)
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "mastervalues command should not return an error:%s", err)
 		assert.NotEmpty(t, out, "mastervalues command should not return an empty string")
@@ -119,7 +119,7 @@ func TestMasterValues(t *testing.T) {
 		}
 		p := nagios.NewPlugin()
 		p.SkipOSExit()
-		SetHmPlugin(p)
+		SetPlugin(p)
 		out, err := common.CmdRun(RootCmd, args)
 		assert.Errorf(t, err, "mastervalues command should not return an error:%s", err)
 		assert.Containsf(t, out, "device with id 4743 not in response",

@@ -65,7 +65,7 @@ func init() {
 func Execute() {
 	if err := RootCmd.Execute(); err != nil {
 		fmt.Println(err)
-		p := GetHmPlugin()
+		p := GetPlugin()
 		p.Errors = append(p.Errors, err)
 		log.Debugf("return UNKNOWN, errors: %v", p.Errors)
 		NagiosResult("UNKNOWN", "", "", nil)

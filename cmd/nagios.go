@@ -1,13 +1,11 @@
 package cmd
 
 import (
-	"regexp"
-
 	"github.com/atc0005/go-nagios"
 	log "github.com/sirupsen/logrus"
 )
 
-var hmPlugin = nagios.NewPlugin()
+var plugin = nagios.NewPlugin()
 
 const (
 	stateOK       = "OK"
@@ -18,7 +16,7 @@ const (
 
 // NagiosResult is a helper function to return a nagios plugin result
 func NagiosResult(status string, output string, longOutput string, perfdata []nagios.PerformanceData) *nagios.Plugin {
-	p := GetHmPlugin()
+	p := GetPlugin()
 
 	// Second, immediately defer ReturnCheckResults() so that it runs as the
 	// last step in your client code. If you do not defer ReturnCheckResults()
@@ -71,18 +69,12 @@ func NagiosResult(status string, output string, longOutput string, perfdata []na
 	return p
 }
 
-// SetHmPlugin sets the nagios plugin for the library
-func SetHmPlugin(plugin *nagios.Plugin) {
-	hmPlugin = plugin
+// SetPlugin sets the nagios plugin for the library
+func SetPlugin(p *nagios.Plugin) {
+	plugin = p
 }
 
-// GetHmPlugin returns the nagios plugin for the library
-func GetHmPlugin() *nagios.Plugin {
-	return hmPlugin
-}
-
-func isNumeric(s string) bool {
-	re := regexp.MustCompile(`^[+-\\d.]+$`)
-	r := re.MatchString(s)
-	return r
+// GetPlugin returns the nagios plugin for the library
+func GetPlugin() *nagios.Plugin {
+	return plugin
 }

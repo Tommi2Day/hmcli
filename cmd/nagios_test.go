@@ -31,7 +31,7 @@ func TestNagios(t *testing.T) {
 
 	for _, tt := range tests {
 		checkHM := nagios.NewPlugin()
-		SetHmPlugin(checkHM)
+		SetPlugin(checkHM)
 		checkHM.SkipOSExit()
 		t.Run(tt.name, func(t *testing.T) {
 			p := NagiosResult(tt.status, "no notifications", "", tt.perfdata)
@@ -41,29 +41,6 @@ func TestNagios(t *testing.T) {
 			t.Logf("Output: %s\nLongOutput: %s", so, lo)
 			assert.Equal(t, tt.expectedStatus, sc, "NagiosResult should return %s", tt.status)
 			assert.Zerof(t, len(p.Errors), "result should not have errors, but have thise: %v", p.Errors)
-		})
-	}
-}
-
-func TestIsNumeric(t *testing.T) {
-	tests := []struct {
-		name     string
-		input    string
-		expected bool
-	}{
-		{"isNumeric", "123", true},
-		{"isNumericFloat", "123.456", true},
-		{"isNumericNegative", "-123", true},
-		{"isNumericNegativeFloat", "+123.456", true},
-		{"isNumericEmpty", "", false},
-		{"isNumericString", "abc", false},
-		{"isNumericStringWithNumber", "abc123", false},
-		{"isNumericStringWithNumberNegative", "abc-123", false},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, tt.expected, isNumeric(tt.input), "isNumeric should return %v", tt.expected)
 		})
 	}
 }

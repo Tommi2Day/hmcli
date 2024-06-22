@@ -1,8 +1,9 @@
 # Changelog hmcli
 
-## [v1.2.0 - 2024-06-22]
-### Changed
+## [v1.2.1 - 2024-06-23]
 - renamed from check_hm to hmcli
+- use common.IsNumeric
+- rename Get/SetHMPlugin to Get/SetPlugin
 - update dependencies
 
 ## [v1.1.1 - 2024-05-25]

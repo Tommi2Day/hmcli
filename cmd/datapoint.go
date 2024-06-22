@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"regexp"
 
+	"github.com/tommi2day/gomodules/common"
+
 	"github.com/atc0005/go-nagios"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -190,10 +192,10 @@ func datapointCheck(cmd *cobra.Command, _ []string) error {
 		// boolean
 	case "4":
 		// float
-		preparePD = isNumeric(dp.Value)
+		preparePD = common.IsNumeric(dp.Value)
 	case "16":
 		// integer
-		preparePD = isNumeric(dp.Value)
+		preparePD = common.IsNumeric(dp.Value)
 	case "20":
 		// text
 	}

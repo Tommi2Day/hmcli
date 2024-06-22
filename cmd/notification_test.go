@@ -43,7 +43,7 @@ func TestNotifications(t *testing.T) {
 			"--unit-test",
 		}
 		p := nagios.NewPlugin()
-		SetHmPlugin(p)
+		SetPlugin(p)
 		p.SkipOSExit()
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "notifications command should not return an error:%s", err)
@@ -61,7 +61,7 @@ func TestNotifications(t *testing.T) {
 			"--unit-test",
 		}
 		p := nagios.NewPlugin()
-		SetHmPlugin(p)
+		SetPlugin(p)
 		p.SkipOSExit()
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "notifications command should not return an error:%s", err)

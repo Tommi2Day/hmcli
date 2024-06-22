@@ -73,7 +73,7 @@ func TestDatapoint(t *testing.T) {
 		}
 		p := nagios.NewPlugin()
 		p.SkipOSExit()
-		SetHmPlugin(p)
+		SetPlugin(p)
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "datapoint check command should not return an error:%s", err)
 		assert.NotEmpty(t, out, "datapoint check command should not return an empty string")
@@ -95,7 +95,7 @@ func TestDatapoint(t *testing.T) {
 		}
 		p := nagios.NewPlugin()
 		p.SkipOSExit()
-		SetHmPlugin(p)
+		SetPlugin(p)
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "datapoint command should not return an error:%s", err)
 		assert.NotEmpty(t, out, "datapoint command should not return an empty string")
@@ -116,7 +116,7 @@ func TestDatapoint(t *testing.T) {
 		}
 		p := nagios.NewPlugin()
 		p.SkipOSExit()
-		SetHmPlugin(p)
+		SetPlugin(p)
 		out, err := common.CmdRun(RootCmd, args)
 		assert.Errorf(t, err, "datapoint command should not return an error:%s", err)
 		assert.Containsf(t, out, "UNKNOWN: datapoint id 4743 not found",
