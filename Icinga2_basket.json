@@ -133,7 +133,7 @@
       "uuid": "eb7a8171-f016-4845-81c3-87d108709125"
     }
   },
-  "CommandTemplate": {
+  "ServiceTemplate": {
     "Homematic": {
       "check_command": "hm",
       "check_interval": 900,
@@ -149,7 +149,7 @@
       "uuid": "d27bfb62-1ef7-4b7a-8b27-a0e31c12f78b",
       "vars": {
         "hm_token": "<token>",
-        "hm_url": "http://ccu"
+        "hm_url": "https://ccu/"
       }
     }
   },
@@ -164,7 +164,7 @@
       "settings": {
         "visibility": "visible"
       },
-      "category": "hmcli"
+      "category": "check_hm"
     },
     "111": {
       "uuid": "f06ee85b-9e8b-4e7b-a559-b950c92e0929",
@@ -176,7 +176,7 @@
       "settings": {
         "visibility": "visible"
       },
-      "category": "hmcli"
+      "category": "check_hm"
     },
     "106": {
       "uuid": "59a14db9-a752-49ba-a728-abe447672037",
@@ -188,7 +188,7 @@
       "settings": {
         "visibility": "visible"
       },
-      "category": "hmcli"
+      "category": "check_hm"
     },
     "108": {
       "uuid": "8e08c513-7a08-406d-ae31-15998319bbcb",
@@ -200,7 +200,7 @@
       "settings": {
         "visibility": "visible"
       },
-      "category": "hmcli"
+      "category": "check_hm"
     },
     "116": {
       "uuid": "11018017-0eee-4ea4-8b55-8b33a8b3e4e2",
@@ -212,7 +212,7 @@
       "settings": {
         "visibility": "visible"
       },
-      "category": "hmcli"
+      "category": "check_hm"
     },
     "109": {
       "uuid": "b0e4a4d2-5ba6-45a7-8b1a-f62c0e9b775d",
@@ -224,7 +224,7 @@
       "settings": {
         "visibility": "visible"
       },
-      "category": "hmcli"
+      "category": "check_hm"
     },
     "115": {
       "uuid": "fa6f9466-7315-4786-b963-492c6a138a6c",
@@ -236,7 +236,7 @@
       "settings": {
         "visibility": "visible"
       },
-      "category": "hmcli"
+      "category": "check_hm"
     },
     "114": {
       "uuid": "253aecab-8677-44e2-b0f2-a12732df5dd0",
@@ -248,7 +248,7 @@
       "settings": {
         "visibility": "visible"
       },
-      "category": "hmcli"
+      "category": "check_hm"
     },
     "110": {
       "uuid": "bc2e2b46-3a13-4714-b298-927c91f0ab4e",
@@ -260,7 +260,7 @@
       "settings": {
         "visibility": "visible"
       },
-      "category": "hmcli"
+      "category": "check_hm"
     },
     "112": {
       "uuid": "9af2c492-78f6-47a4-b0b0-379c63fe4c59",
@@ -272,7 +272,7 @@
       "settings": {
         "visibility": "visible"
       },
-      "category": "hmcli"
+      "category": "check_hm"
     },
     "105": {
       "uuid": "876c01e0-6dda-4890-9cda-a96c02109adb",
@@ -284,7 +284,7 @@
       "settings": {
         "visibility": "visible"
       },
-      "category": "hmcli"
+      "category": "check_hm"
     },
     "104": {
       "uuid": "2bafae55-29ee-49fa-8f64-b9075450cfd5",
@@ -296,7 +296,7 @@
       "settings": {
         "visibility": "visible"
       },
-      "category": "hmcli"
+      "category": "check_hm"
     },
     "107": {
       "uuid": "906bf45c-f533-4a01-b17f-a7dcd265ace3",
@@ -308,12 +308,12 @@
       "settings": {
         "visibility": "visible"
       },
-      "category": "hmcli"
+      "category": "check_hm"
     }
   },
   "DatafieldCategory": {
-    "hmcli": {
-      "category_name": "hmcli",
+    "check_hm": {
+      "category_name": "check_hm",
       "description": null,
       "originalId": "14"
     }

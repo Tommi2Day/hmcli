@@ -4,6 +4,7 @@
 - renamed from check_hm to hmcli
 - use common.IsNumeric
 - rename Get/SetHMPlugin to Get/SetPlugin
+- update Icinga2 definition and basket
 - update dependencies
 
 ## [v1.1.1 - 2024-05-25]

@@ -14,7 +14,7 @@ for your convenience, a icinga director basket is available [here](Icinga2_baske
 
 ### commands
 ```conf
-object CheckCommand "hm" {
+oobject CheckCommand "hm" {
     import "plugin-check-command"
     command = [ PluginDir + "/hmcli" ]
     arguments += {
@@ -74,7 +74,7 @@ object CheckCommand "hm" {
             value = "$hm_warning$"
         }
     }
-}  
+}
 ```
 
 ### Service template
