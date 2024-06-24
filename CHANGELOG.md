@@ -1,5 +1,10 @@
 # Changelog hmcli
 
+## [v1.2.2 - 2024-06-24]
+### Changed
+- update dependencies
+- replace test init function
+
 ## [v1.2.1 - 2024-06-23]
 - renamed from check_hm to hmcli
 - use common.IsNumeric

@@ -14,7 +14,7 @@ import (
 
 func TestDevices(t *testing.T) {
 	var httpClient = resty.New()
-	test.Testinit(t)
+	test.InitTestDirs()
 	httpmock.Reset()
 	httpmock.ActivateNonDefault(httpClient.GetClient())
 	hmlib.SetHTTPClient(httpClient)

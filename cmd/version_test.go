@@ -13,7 +13,7 @@ import (
 func TestVersion(t *testing.T) {
 	var err error
 	var out = ""
-	test.Testinit(t)
+	test.InitTestDirs()
 	t.Run("Version func", func(t *testing.T) {
 		actual := GetVersion(false)
 		assert.NotEmpty(t, actual, "GetVersion should not be empty")

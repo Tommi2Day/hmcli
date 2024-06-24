@@ -14,7 +14,7 @@ import (
 
 func TestRssi(t *testing.T) {
 	var httpClient = resty.New()
-	test.Testinit(t)
+	test.InitTestDirs()
 	httpmock.ActivateNonDefault(httpClient.GetClient())
 	defer httpmock.DeactivateAndReset()
 	hmlib.SetHTTPClient(httpClient)

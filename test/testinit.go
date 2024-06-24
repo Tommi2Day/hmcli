@@ -6,7 +6,8 @@ import (
 	"os"
 	"path"
 	"runtime"
-	"testing"
+
+	log "github.com/sirupsen/logrus"
 )
 
 // TestDir working dir for test
@@ -15,8 +16,8 @@ var TestDir string
 // TestData directory for working Attachments
 var TestData string
 
-// Testinit set test directory
-func Testinit(t *testing.T) {
+// InitTestDirs set test directory
+func InitTestDirs() {
 	_, filename, _, _ := runtime.Caller(0)
 	dir := path.Dir(filename)
 	err := os.Chdir(dir)
@@ -26,10 +27,9 @@ func Testinit(t *testing.T) {
 		// create data directory and ignore errors
 		err = os.Mkdir(TestData, 0750)
 		if err != nil && !os.IsExist(err) {
-			t.Fatalf("Init error:%s", err)
+			log.Fatalf("Init error:%s", err)
 		}
-		t.Logf("Test in %s", dir)
 	} else {
-		t.Fatalf("Init error:%s", err)
+		log.Fatalf("Init error:%s", err)
 	}
 }
