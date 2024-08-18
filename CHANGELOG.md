@@ -3,6 +3,7 @@
 ## [v1.2.3 - 2024-08-18]
 ### Changed
 - update dependencies
+- replace os.WriteFile with common.WriteStringToFile
 ### Fixed
 - fix new linter issues
 
