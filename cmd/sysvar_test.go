@@ -45,7 +45,7 @@ func TestSysvar(t *testing.T) {
 		assert.NoErrorf(t, err, "sysvars command should not return an error:%s", err)
 		assert.NotEmpty(t, out, "sysvars command should not return an empty string")
 		assert.Containsf(t, out, "DutyCycle-LGW", "deviceList command should contain 'DutyCycle-LGW'")
-		t.Logf(out)
+		t.Log(out)
 	})
 
 	t.Run("sysvar check cmd match value", func(t *testing.T) {
@@ -76,7 +76,7 @@ func TestSysvar(t *testing.T) {
 		assert.Containsf(t, out, "CRITICAL", "DutyCycle command should raise CRITICAL if value not matched")
 		_ = sysvarCheckCmd.Flags().Set("match", "")
 		_ = sysvarCheckCmd.Flags().Set("id", "")
-		t.Logf(out)
+		t.Log(out)
 	})
 	t.Run("sysvar check cmd warn value", func(t *testing.T) {
 		// reset map
@@ -106,6 +106,6 @@ func TestSysvar(t *testing.T) {
 		assert.Containsf(t, out, "WARNING", "DutyCycle command should raise warning at >= 5")
 		_ = sysvarCheckCmd.Flags().Set("warn", "")
 		_ = sysvarCheckCmd.Flags().Set("id", "")
-		t.Logf(out)
+		t.Log(out)
 	})
 }

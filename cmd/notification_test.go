@@ -50,7 +50,7 @@ func TestNotifications(t *testing.T) {
 		assert.NotEmpty(t, out, "notifications command should not return an empty string")
 		assert.Containsf(t, out, "1 notifications pending", "notifications command should one notification")
 		assert.Containsf(t, out, "WARNING", "notifications command should raise warning at >= 1")
-		t.Logf(out)
+		t.Log(out)
 	})
 	t.Run("notifications cmd with ignore", func(t *testing.T) {
 		args := []string{
@@ -69,6 +69,6 @@ func TestNotifications(t *testing.T) {
 		assert.Containsf(t, out, "0 notifications pending", "notifications command should not contain a notification")
 		assert.Containsf(t, out, "ignoring notification: LOWBAT", "ignore should be mentioned")
 		assert.Containsf(t, out, "OK", "notifications command should  have OK")
-		t.Logf(out)
+		t.Log(out)
 	})
 }

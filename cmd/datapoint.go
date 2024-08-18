@@ -212,7 +212,7 @@ func datapointCheck(cmd *cobra.Command, _ []string) error {
 		re = regexp.MustCompile(m)
 		if !re.MatchString(dp.Value) {
 			output = fmt.Sprintf("CRITICAL: %s returned value '%s', does not match '%s'", dp.Name, dp.Value, m)
-			log.Debugf(output)
+			log.Debug(output)
 			NagiosResult("CRITICAL", output, longOutput, performanceData)
 			return nil
 		}

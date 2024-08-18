@@ -39,7 +39,7 @@ func TestDevices(t *testing.T) {
 		assert.NoErrorf(t, err, "deviceList command should not return an error:%s", err)
 		assert.NotEmpty(t, out, "deviceList command should not return an empty string")
 		assert.Containsf(t, out, "Bewegungsmelder Garage", "deviceList command should contain Bewegungsmelder Garage")
-		t.Logf(out)
+		t.Log(out)
 	})
 	t.Run("deviceList cmd by name", func(t *testing.T) {
 		response := DeviceListTest
@@ -59,7 +59,7 @@ func TestDevices(t *testing.T) {
 		assert.Contains(t, out, "Bewegungsmelder Garage", "deviceList command should contain Bewegungsmelder Garage")
 		assert.Contains(t, out, "found", "deviceList command should contain 'found'")
 		_ = deviceListCmd.Flags().Set("name", "")
-		t.Logf(out)
+		t.Log(out)
 	})
 	t.Run("deviceList cmd by ID", func(t *testing.T) {
 		response := DeviceListTest
@@ -79,7 +79,7 @@ func TestDevices(t *testing.T) {
 		assert.Containsf(t, out, "Bewegungsmelder Garage", "deviceList command should contain Bewegungsmelder Garage")
 		assert.Contains(t, out, "found", "deviceList command should contain 'found'")
 		_ = deviceListCmd.Flags().Set("id", "")
-		t.Logf(out)
+		t.Log(out)
 	})
 	t.Run("deviceList cmd by address", func(t *testing.T) {
 		response := DeviceListTest
@@ -99,6 +99,6 @@ func TestDevices(t *testing.T) {
 		assert.Containsf(t, out, "Bewegungsmelder Garage", "deviceList command should contain Bewegungsmelder Garage")
 		assert.Contains(t, out, "found", "deviceList command should contain 'found'")
 		_ = deviceListCmd.Flags().Set("address", "")
-		t.Logf(out)
+		t.Log(out)
 	})
 }

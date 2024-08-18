@@ -130,7 +130,7 @@ func getSysVar(n string, i string) (entry hmlib.SysVarEntry, err error) {
 	err = hmlib.GetSysvarList(false)
 	if err != nil {
 		err = fmt.Errorf("getSysvarList failed:%s", err)
-		log.Debugf(err.Error())
+		log.Debug(err.Error())
 		return
 	}
 	// query by name
@@ -146,14 +146,14 @@ func getSysVar(n string, i string) (entry hmlib.SysVarEntry, err error) {
 		}
 		if !found {
 			err = fmt.Errorf("sysvar with name %s not found", n)
-			log.Debugf(err.Error())
+			log.Debug(err.Error())
 			return
 		}
 	}
 	entry, ok := hmlib.SysVarIDMap[i]
 	if !ok {
 		err = fmt.Errorf("UNKNOWN:sysvar id %s not found", i)
-		log.Debugf(err.Error())
+		log.Debug(err.Error())
 		return
 	}
 	return
@@ -164,13 +164,13 @@ func checkMatch(name string, v string, m string) (status string, output string) 
 	re, err := regexp.Compile(m)
 	if err != nil {
 		output = fmt.Sprintf("UNKNOWN: regexp compile %s failed: %s", m, err)
-		log.Debugf(output)
+		log.Debug(output)
 		status = stateUnknown
 		return
 	}
 	if !re.MatchString(v) {
 		output = fmt.Sprintf("CRITICAL: sysvar %s value %s, does not match %s", name, v, m)
-		log.Debugf(output)
+		log.Debug(output)
 		status = stateCritical
 		return
 	}

@@ -45,7 +45,7 @@ func TestMasterValues(t *testing.T) {
 		out, err := common.CmdRun(RootCmd, args)
 		assert.Errorf(t, err, "mastervalues command should return an error")
 		assert.Containsf(t, out, "please provide an address or id", "Id should missing")
-		t.Logf(out)
+		t.Log(out)
 	})
 	t.Run("MasterValue list", func(t *testing.T) {
 		args := []string{
@@ -60,7 +60,7 @@ func TestMasterValues(t *testing.T) {
 		assert.NotEmpty(t, out, "mastervalues command should not return an empty string")
 		assert.Containsf(t, out, "MOTIONDETECTOR_TRANSCEIVER", "mastervalues command should contain MOTIONDETECTOR_TRANSCEIVER")
 		_ = valueListCmd.Flags().Set("id", "")
-		t.Logf(out)
+		t.Log(out)
 	})
 	t.Run("MasterValue Check", func(t *testing.T) {
 		args := []string{
@@ -83,7 +83,7 @@ func TestMasterValues(t *testing.T) {
 		// reset warn and id flag
 		_ = valueCheckCmd.Flags().Set("warn", "")
 		_ = valueCheckCmd.Flags().Set("id", "")
-		t.Logf(out)
+		t.Log(out)
 	})
 	t.Run("MasterValue match Check", func(t *testing.T) {
 		args := []string{
@@ -106,7 +106,7 @@ func TestMasterValues(t *testing.T) {
 		// reset match and id flag
 		_ = valueCheckCmd.Flags().Set("match", "")
 		_ = valueCheckCmd.Flags().Set("id", "")
-		t.Logf(out)
+		t.Log(out)
 	})
 	t.Run("MasterValue wrong id Check", func(t *testing.T) {
 		args := []string{
@@ -126,6 +126,6 @@ func TestMasterValues(t *testing.T) {
 			"mastervalues command should contain 'device with id 4743 not in response'")
 		// reset warn flag
 		_ = valueCheckCmd.Flags().Set("name", "")
-		t.Logf(out)
+		t.Log(out)
 	})
 }

@@ -64,7 +64,7 @@ func mastervalueList(cmd *cobra.Command, _ []string) error {
 	log.Debugf("name parameter: %v", n)
 	if a == "" && i == "" && n == "" {
 		err := fmt.Errorf("please provide an address or id or exact name")
-		log.Debugf(err.Error())
+		log.Debug(err.Error())
 		return err
 	}
 	// get device list
@@ -255,7 +255,7 @@ func mastervalueCheck(cmd *cobra.Command, _ []string) error {
 		re = regexp.MustCompile(m)
 		if !re.MatchString(v) {
 			output = fmt.Sprintf("CRITICAL: %s.%s returned value '%s', does not match '%s'", d.Name, n, v, m)
-			log.Debugf(output)
+			log.Debug(output)
 			NagiosResult("CRITICAL", output, longOutput, performanceData)
 			return nil
 		}

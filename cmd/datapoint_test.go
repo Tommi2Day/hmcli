@@ -40,7 +40,7 @@ func TestDatapoint(t *testing.T) {
 		assert.NoErrorf(t, err, "datapoint List command should not return an error:%s", err)
 		assert.NotEmpty(t, out, "datapoint List command should not return an empty string")
 		assert.Contains(t, out, "SUCCESS: 33 data points", "deviceList command should contain 'SUCCESS: 33 data points'")
-		t.Logf(out)
+		t.Log(out)
 	})
 	t.Run("datapoint list cmd with match", func(t *testing.T) {
 		response := StateListTest
@@ -59,7 +59,7 @@ func TestDatapoint(t *testing.T) {
 		assert.NotEmpty(t, out, "datapoint List command should not return an empty string")
 		assert.Contains(t, out, "SUCCESS: 2 data points", "deviceList command should contain 'SUCCESS: 2 data points'")
 		_ = datapointListCmd.Flags().Set("match", "")
-		t.Logf(out)
+		t.Log(out)
 	})
 
 	t.Run("datapoint Check", func(t *testing.T) {
@@ -82,7 +82,7 @@ func TestDatapoint(t *testing.T) {
 		// reset warn flag and id
 		_ = datapointCheckCmd.Flags().Set("warn", "")
 		_ = datapointCheckCmd.Flags().Set("id", "")
-		t.Logf(out)
+		t.Log(out)
 	})
 	t.Run("datapoint per name match Check", func(t *testing.T) {
 		args := []string{
@@ -104,7 +104,7 @@ func TestDatapoint(t *testing.T) {
 		// reset name and match flag
 		_ = datapointCheckCmd.Flags().Set("match", "")
 		_ = datapointCheckCmd.Flags().Set("name", "")
-		t.Logf(out)
+		t.Log(out)
 	})
 	t.Run("datapoint wrong id Check", func(t *testing.T) {
 		args := []string{
@@ -123,6 +123,6 @@ func TestDatapoint(t *testing.T) {
 			"datapoint command should contain 'UNKNOWN: datapoint id 4743 not found'")
 		// reset warn flag
 		_ = datapointCheckCmd.Flags().Set("id", "")
-		t.Logf(out)
+		t.Log(out)
 	})
 }

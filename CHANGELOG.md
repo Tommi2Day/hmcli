@@ -1,5 +1,11 @@
 # Changelog hmcli
 
+## [v1.2.3 - 2024-08-18]
+### Changed
+- update dependencies
+### Fixed
+- fix new linter issues
+
 ## [v1.2.2 - 2024-06-24]
 ### Changed
 - update dependencies

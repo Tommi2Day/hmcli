@@ -40,6 +40,6 @@ func TestRssi(t *testing.T) {
 		assert.NoErrorf(t, err, "rssi command should not return an error:%s", err)
 		assert.NotEmpty(t, out, "rssi command should not return an empty string")
 		assert.Containsf(t, out, "MEQ0481419", "rssi command should contain MEQ0481419")
-		t.Logf(out)
+		t.Log(out)
 	})
 }
