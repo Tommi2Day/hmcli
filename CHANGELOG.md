@@ -1,5 +1,13 @@
 # Changelog hmcli
 
+## [v1.2.4 - 2024-10-03]
+### New
+- add arm64 target
+### Changed
+- update dependencies
+- use Go1.23
+- use Goreleaser V2 and v6 GitHub Action
+
 ## [v1.2.3 - 2024-08-18]
 ### Changed
 - update dependencies
