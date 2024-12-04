@@ -53,6 +53,9 @@ func NagiosResult(status string, output string, longOutput string, perfdata []na
 	if len(hmCritThreshold) > 0 {
 		p.CriticalThreshold = hmCritThreshold
 	}
+	if !showThresholds {
+		p.HideThresholdsSection()
+	}
 	if len(perfdata) > 0 {
 		err := p.AddPerfData(false, perfdata...)
 		if err != nil {

@@ -1,5 +1,11 @@
 # Changelog hmcli
 
+## [v1.3.0 - 2024-12-04]
+### new
+- add show-threshold flag
+### changed
+- update dependencies
+
 ## [v1.2.4 - 2024-10-03]
 ### New
 - add arm64 target

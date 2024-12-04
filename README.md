@@ -43,14 +43,16 @@ Available Commands:
   version       version print version string
 
 Flags:
-  -C, --config string   config file name
-  -c, --crit string     critical level
-  -d, --debug           verbose debug output
-  -h, --help            help for hmcli
-  -t, --token string    Homematic XMLAPI Token
-      --unit-test       redirect output for unit tests
-  -u, --url string      Homematic URL (default: https://ccu) (default "https://ccu")
-  -w, --warn string     warning level
+  -C, --config string    config file name
+  -c, --crit string      critical level
+  -d, --debug            verbose debug output
+  -h, --help             help for hmcli
+  -T, --show-threshold   show threshold section
+  -t, --token string     Homematic XMLAPI Token
+      --unit-test        redirect output for unit tests
+  -u, --url string       Homematic URL (default "http://ccu")
+  -w, --warn string      warning level
+
 
 #-------------------
 >hmcli datapoint
@@ -245,11 +247,7 @@ Device (ID=4740): Bewegungsmelder Garage, Type: HmIP-SMO
 # check a single master value (usinng id) and set warning level if value is  >=9
 >xheck_hm.exe mastervalues check --id 4740 --name ARR_TIMEOUT -w 9
 ARR_TIMEOUT=10 
-**THRESHOLDS**
 
-* WARNING: 9
-
-**DETAILED INFO**
 
 Device:4740 ID:Bewegungsmelder Garage ValueName:ARR_TIMEOUT=10
  | 'Bewegungsmelder Garage(4740).ARR_TIMEOUT'=10;9;;; 'time'=156ms;;;;
@@ -257,11 +255,6 @@ Device:4740 ID:Bewegungsmelder Garage ValueName:ARR_TIMEOUT=10
 # check notifications and warn if there is one or more pending
 >hmcli.exe notifications -w 1
 1 notifications pending 
-**THRESHOLDS**
-
-* WARNING: 1
-
-**DETAILED INFO**
 
 CONFIG_PENDING: HmIP-RF.000955699D3D84:0.CONFIG_PENDING(Bewegungsmelder Garage) since 2024-02-17T18:25:31+01:00
 
@@ -289,11 +282,6 @@ ID:6548, Name: DutyCycle, Value: 36.000000 %, INFO: DutyCycle CCU, Since:2024-02
 # DutyCycle needs to be published by removing the "internal" flag in CCU Systemvariables settings
 >hmcli.exe sysvar check --id 6548 -w 30
 DutyCycle=34.000000 (%) 
-**THRESHOLDS**
-
-* WARNING: 30
-
-**DETAILED INFO**
 
 ID:6548, Name: DutyCycle, Value: 34.000000 %, INFO: DutyCycle CCU, Since:2024-02-17 21:58:00
  | 'DutyCycle(6548).'=34.000000;30;;; 'time'=229ms;;;;

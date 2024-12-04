@@ -6,11 +6,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tommi2day/gomodules/hmlib"
-
 	"github.com/ory/dockertest/v3/docker/pkg/homedir"
 
 	"github.com/tommi2day/gomodules/common"
+	"github.com/tommi2day/gomodules/hmlib"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -26,6 +25,7 @@ var (
 	hmURL           string
 	hmWarnThreshold string
 	hmCritThreshold string
+	showThresholds  = false
 
 	// RootCmd entry point to start
 	RootCmd = &cobra.Command{
@@ -50,6 +50,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 	RootCmd.PersistentFlags().BoolVarP(&debugFlag, "debug", "d", false, "verbose debug output")
 	RootCmd.PersistentFlags().BoolVarP(&unitTestFlag, "unit-test", "", false, "redirect output for unit tests")
+	RootCmd.PersistentFlags().BoolVarP(&showThresholds, "show-threshold", "T", false, "show threshold section")
 	RootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "C", "", "config file name")
 	RootCmd.PersistentFlags().StringVarP(&hmToken, "token", "t", "", "Homematic XMLAPI Token")
 	RootCmd.PersistentFlags().StringVarP(&hmURL, "url", "u", "http://ccu", "Homematic URL")
