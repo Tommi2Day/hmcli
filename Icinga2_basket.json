@@ -45,6 +45,12 @@
           "description": "HM Name (target depends on command)",
           "value": "$hm_name$"
         },
+        "-p": {
+          "description": "Print Ignored",
+          "set_if": "$hm_print_ignored$",
+          "set_if_format": "string",
+          "value": "$hm_print_ignored$"
+        },
         "-t": {
           "description": "HM Token",
           "value": "$hm_token$"
@@ -102,6 +108,11 @@
         },
         {
           "datafield_id": 110,
+          "is_required": "n",
+          "var_filter": null
+        },
+        {
+          "datafield_id": 148,
           "is_required": "n",
           "var_filter": null
         },
@@ -260,6 +271,16 @@
       "settings": {
         "visibility": "visible"
       },
+      "category": "check_hm"
+    },
+    "148": {
+      "uuid": "7043ace6-c667-4c1c-a60a-b15a9f510e7e",
+      "varname": "hm_print_ignored",
+      "caption": "hm_print_ignored",
+      "description": "Prints ignored notifications",
+      "datatype": "Icinga\\Module\\Director\\DataType\\DataTypeBoolean",
+      "format": null,
+      "settings": {},
       "category": "check_hm"
     },
     "112": {

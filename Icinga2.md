@@ -14,7 +14,7 @@ for your convenience, a icinga director basket is available [here](Icinga2_baske
 
 ### commands
 ```conf
-oobject CheckCommand "hm" {
+object CheckCommand "hm" {
     import "plugin-check-command"
     command = [ PluginDir + "/hmcli" ]
     arguments += {
@@ -60,6 +60,11 @@ oobject CheckCommand "hm" {
         "-n" = {
             description = "HM Name (target depends on command)"
             value = "$hm_name$"
+        }
+        "-p" = {
+            description = "Print Ignored"
+            set_if = "$hm_print_ignored$"
+            value = "$hm_print_ignored$"
         }
         "-t" = {
             description = "HM Token"
@@ -129,8 +134,8 @@ object Service "Homematic Notifications" {
     host_name = "ccu"
     import "Homematic"
 
-    vars.hm_command = "notifications"
     vars.hm_ignore = "STICKY_UNREACH|CONFIG_PENDING"
-    vars.hm_warning = "1"
+    vars.hm_print_ignored = true
+    vars.hm_warning = "0"
 }
 ```
