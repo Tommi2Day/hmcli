@@ -3,11 +3,9 @@
 Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic based on XMLAPI AddOn
 
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/tommi2day/hmcli)](https://goreportcard.com/report/github.com/tommi2day/hmcli)
-![CI](https://github.com/tommi2day/hmcli/actions/workflows/main.yml/badge.svg)
-[![codecov](https://codecov.io/gh/Tommi2Day/hmcli/branch/main/graph/badge.svg?token=3EBK75VLC8)](https://codecov.io/gh/Tommi2Day/hmcli)
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/tommi2day/hmcli)
-
+[![pipeline status](https://gitlab.intern.tdressler.net/goproj/hmcli/badges/main/pipeline.svg)](https://gitlab.intern.tdressler.net/goproj/hmcli/-/pipelines)
+[![coverage report](https://gitlab.intern.tdressler.net/goproj/hmcli/badges/main/coverage.svg?min_medium=50&min_acceptable=75&min_good=90)](https://gitlab.intern.tdressler.net/goproj/hmcli/-/commits/main)
+[![Latest Release](https://gitlab.intern.tdressler.net/goproj/hmcli/-/badges/release.svg)](https://gitlab.intern.tdressler.net/goproj/hmcli/-/releases)
 
 
 ## Setup
@@ -264,13 +262,14 @@ CONFIG_PENDING: HmIP-RF.000955699D3D84:0.CONFIG_PENDING(Bewegungsmelder Garage) 
 
 # check notifications as before, but ignore sticky and config pending notifications
 >hmcli.exe notifications -I 'STICKY|PENDING' -w 1
-0 notifications pending, 1 ignored | 'notifications'=0;1;;; 'time'=1853ms;;;;
+0 notifications pending | 'notifications'=0;1;;; 'time'=1853ms;;;;
 
 # print ignored notifications
 >hmcli.exe notifications -I 'STICKY|PENDING' -p
 0 notifications pending, 1 ignored | 'notifications'=0;;;; 'time'=1764ms;;;; 
 
-IGNORED: CONFIG_PENDING: HmIP-RF.000955699D3D84:0.CONFIG_PENDING(Bewegungsmelder Garage) since 2024-02-17T18:25:31+01:00
+IGNORED: 
+CONFIG_PENDING: HmIP-RF.000955699D3D84:0.CONFIG_PENDING(Bewegungsmelder Garage) since 2024-02-17T18:25:31+01:00
 # list rssi values of devices
 >hmcli.exe rssi
 Address:BidCoS-RF rx:65536 tx: -56

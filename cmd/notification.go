@@ -58,7 +58,7 @@ func getNotifications(cmd *cobra.Command, _ []string) error {
 		return nil
 	}
 
-	if _, err := hmlib.GetStateList(); err != nil {
+	if _, err = hmlib.GetStateList(); err != nil {
 		return err
 	}
 
@@ -81,6 +81,7 @@ func processNotifications(notifications hmlib.SystemNotificationResponse, reIgno
 	notificationCount := len(notifications.Notifications)
 	ignoredCount := 0
 	notificationDetails := ""
+	ignoredDetails := ""
 
 	for _, notification := range notifications.Notifications {
 		details, err := processNotificationDetail(notification)
@@ -95,11 +96,12 @@ func processNotifications(notifications hmlib.SystemNotificationResponse, reIgno
 		if reIgnoreNotifications != nil && reIgnoreNotifications.MatchString(output) {
 			log.Debugf("ignoring notification: %s", output)
 			notificationCount--
-			ignoredCount++
 			if !printIgnored {
 				continue
 			}
-			output = ignoredPrefix + output
+			ignoredCount++
+			ignoredDetails += output
+			output = ""
 		}
 		notificationDetails += output
 	}
@@ -107,6 +109,7 @@ func processNotifications(notifications hmlib.SystemNotificationResponse, reIgno
 	finalOutput := fmt.Sprintf("%d notifications pending", notificationCount)
 	if ignoredCount > 0 {
 		finalOutput += fmt.Sprintf(", %d ignored", ignoredCount)
+		notificationDetails += fmt.Sprintf("%s\n%s", ignoredPrefix, ignoredDetails)
 	}
 
 	perfdata := []nagios.PerformanceData{
