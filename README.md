@@ -157,8 +157,10 @@ Usage:
   hmcli notifications [flags]
 
 Flags:
-  -h, --help   help for notifications
+  -h, --help            help for notifications
   -I, --ignore string   regexp to ignore notifications
+  -p, --print           print ignored notifications
+
 
 #-------------------
 >hmcli rssi --help
@@ -262,8 +264,13 @@ CONFIG_PENDING: HmIP-RF.000955699D3D84:0.CONFIG_PENDING(Bewegungsmelder Garage) 
 
 # check notifications as before, but ignore sticky and config pending notifications
 >hmcli.exe notifications -I 'STICKY|PENDING' -w 1
-0 notifications pending | 'notifications'=0;1;;; 'time'=1853ms;;;;
+0 notifications pending, 1 ignored | 'notifications'=0;1;;; 'time'=1853ms;;;;
 
+# print ignored notifications
+>hmcli.exe notifications -I 'STICKY|PENDING' -p
+0 notifications pending, 1 ignored | 'notifications'=0;;;; 'time'=1764ms;;;; 
+
+IGNORED: CONFIG_PENDING: HmIP-RF.000955699D3D84:0.CONFIG_PENDING(Bewegungsmelder Garage) since 2024-02-17T18:25:31+01:00
 # list rssi values of devices
 >hmcli.exe rssi
 Address:BidCoS-RF rx:65536 tx: -56

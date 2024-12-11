@@ -1,5 +1,9 @@
 # Changelog hmcli
 
+## [v1.4.0 - 2024-12-11]
+### new
+- notifications: add print ignored flag
+
 ## [v1.3.0 - 2024-12-04]
 ### new
 - add show-threshold flag

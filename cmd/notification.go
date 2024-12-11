@@ -25,85 +25,131 @@ You can set -w or -c to set the warning or critical threshold on notification co
 
 func init() {
 	notificationsCmd.Flags().StringP("ignore", "I", "", "regexp to ignore notifications")
+	notificationsCmd.Flags().BoolP("print", "p", false, "print ignored notifications")
 	RootCmd.AddCommand(notificationsCmd)
 }
 
-func getNotifications(cmd *cobra.Command, _ []string) error {
-	var n hmlib.SystemNotificationResponse
-	var err error
-	var reIgnoreNotifications *regexp.Regexp
+const ignoredPrefix = "IGNORED: "
 
+func getNotifications(cmd *cobra.Command, _ []string) error {
 	log.Debug("notifications called")
-	ignore, _ := cmd.Flags().GetString("ignore")
-	if len(ignore) > 0 {
-		log.Debugf("ignore parameter: %v", ignore)
-		reIgnoreNotifications, err = regexp.Compile(ignore)
-		if err != nil {
-			return fmt.Errorf("cannot compile ignore regexp: %v", err)
-		}
-	}
-	p := GetPlugin()
-	_, err = hmlib.GetDeviceList("", false)
+	ignorePattern, _ := cmd.Flags().GetString("ignore")
+	printIgnored, _ := cmd.Flags().GetBool("print")
+
+	reIgnoreNotifications, err := setupIgnoreRegexp(ignorePattern)
 	if err != nil {
 		return err
 	}
-	n, err = hmlib.GetNotifications()
+	if printIgnored {
+		log.Debug("print ignored notifications enabled")
+	}
+
+	if _, err := hmlib.GetDeviceList("", false); err != nil {
+		return err
+	}
+
+	notifications, err := hmlib.GetNotifications()
 	if err != nil {
 		return err
 	}
-	l := len(n.Notifications)
-	if l == 0 {
-		NagiosResult("OK", "no notifications", "", nil)
+
+	if len(notifications.Notifications) == 0 {
+		NagiosResult(stateOK, "no notifications", "", nil)
 		return nil
 	}
-	_, err = hmlib.GetStateList()
-	if err != nil {
+
+	if _, err := hmlib.GetStateList(); err != nil {
 		return err
 	}
-	log.Debugf("ccu has %d notifications", l)
-	longOutput := ""
-	// iterate over all notifications
-	for _, e := range n.Notifications {
-		var nd hmlib.NotificationDetail
-		id := e.IseID
-		ts, _ := common.GetInt64Val(e.Timestamp)
-		nd.Since = time.Unix(ts, 0)
-		nd.Type = e.Type
-		a := strings.Split(e.Name, ".")
-		nd.System = "unknown"
-		aa := strings.Split(a[1], ":")
-		nd.Address = aa[0]
-		log.Debugf("address: %s", nd.Address)
-		an, ok := hmlib.DeviceAddressMap[nd.Address]
-		if ok {
-			nd.System = an.Name
-			log.Debugf("system name set to %s", nd.System)
-		}
-		nd.Name, err = getNameFromStateList(id, e)
+
+	return processNotifications(notifications, reIgnoreNotifications, printIgnored)
+}
+
+func setupIgnoreRegexp(ignorePattern string) (*regexp.Regexp, error) {
+	if len(ignorePattern) == 0 {
+		return nil, nil
+	}
+	log.Debugf("ignore parameter: %v", ignorePattern)
+	reIgnore, err := regexp.Compile(ignorePattern)
+	if err != nil {
+		return nil, fmt.Errorf("cannot compile ignore regexp: %v", err)
+	}
+	return reIgnore, nil
+}
+
+func processNotifications(notifications hmlib.SystemNotificationResponse, reIgnoreNotifications *regexp.Regexp, printIgnored bool) error {
+	notificationCount := len(notifications.Notifications)
+	ignoredCount := 0
+	notificationDetails := ""
+
+	for _, notification := range notifications.Notifications {
+		details, err := processNotificationDetail(notification)
 		if err != nil {
-			l--
-			log.Debugf("error getting name for notification: %v", err)
-			p.Errors = append(p.Errors, err)
+			notificationCount--
+			log.Debugf("error processing notification: %v", err)
+			plugin.Errors = append(plugin.Errors, err)
 			continue
 		}
-		o := fmt.Sprintf("%s: %s(%s) since %s\n", nd.Type, nd.Name, nd.System, nd.Since.Format(time.RFC3339))
-		if reIgnoreNotifications != nil && reIgnoreNotifications.MatchString(o) {
-			log.Debugf("ignoring notification: %s", o)
-			l--
-			continue
+
+		output := fmt.Sprintf("%s: %s(%s) since %s\n", details.Type, details.Name, details.System, details.Since.Format(time.RFC3339))
+		if reIgnoreNotifications != nil && reIgnoreNotifications.MatchString(output) {
+			log.Debugf("ignoring notification: %s", output)
+			notificationCount--
+			ignoredCount++
+			if !printIgnored {
+				continue
+			}
+			output = ignoredPrefix + output
 		}
-		longOutput += o
+		notificationDetails += output
 	}
 
-	// set final nagios state
-	output := fmt.Sprintf("%d notifications pending", l)
-	perfdata := []nagios.PerformanceData{{Label: "notifications",
-		Value: fmt.Sprintf("%d", l),
-		Warn:  hmWarnThreshold,
-		Crit:  hmCritThreshold}}
+	finalOutput := fmt.Sprintf("%d notifications pending", notificationCount)
+	if ignoredCount > 0 {
+		finalOutput += fmt.Sprintf(", %d ignored", ignoredCount)
+	}
 
-	NagiosResult("OK", output, longOutput, perfdata)
+	perfdata := []nagios.PerformanceData{
+		{
+			Label: "notifications",
+			Value: fmt.Sprintf("%d", notificationCount),
+			Warn:  hmWarnThreshold,
+			Crit:  hmCritThreshold,
+		},
+	}
+
+	NagiosResult(stateOK, finalOutput, notificationDetails, perfdata)
 	return nil
+}
+
+func processNotificationDetail(notification hmlib.Notification) (*hmlib.NotificationDetail, error) {
+	ts, _ := common.GetInt64Val(notification.Timestamp)
+	notificationTime := time.Unix(ts, 0)
+
+	addressParts := strings.Split(notification.Name, ".")
+	if len(addressParts) < 2 {
+		return nil, fmt.Errorf("invalid notification name format: %s", notification.Name)
+	}
+
+	address := strings.Split(addressParts[1], ":")[0]
+	system := "unknown"
+	if device, exists := hmlib.DeviceAddressMap[address]; exists {
+		system = device.Name
+		log.Debugf("system name set to %s", system)
+	}
+
+	name, err := getNameFromStateList(notification.IseID, notification)
+	if err != nil {
+		return nil, err
+	}
+
+	return &hmlib.NotificationDetail{
+		Since:   notificationTime,
+		Address: address,
+		System:  system,
+		Type:    notification.Type,
+		Name:    name,
+	}, nil
 }
 
 func getNameFromStateList(id string, e hmlib.Notification) (name string, err error) {

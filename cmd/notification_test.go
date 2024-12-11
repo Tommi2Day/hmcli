@@ -69,6 +69,28 @@ func TestNotifications(t *testing.T) {
 		assert.Containsf(t, out, "0 notifications pending", "notifications command should not contain a notification")
 		assert.Containsf(t, out, "ignoring notification: LOWBAT", "ignore should be mentioned")
 		assert.Containsf(t, out, "OK", "notifications command should  have OK")
+		assert.NotContainsf(t, out, "IGNORED:", "output should not contain IGNORED:")
+		t.Log(out)
+	})
+	t.Run("notifications cmd with printed ignore", func(t *testing.T) {
+		args := []string{
+			"notifications",
+			"--debug",
+			"--warn", "0",
+			"--ignore", "LOW_BAT",
+			"--unit-test",
+			"--print",
+		}
+		p := nagios.NewPlugin()
+		SetPlugin(p)
+		p.SkipOSExit()
+		out, err := common.CmdRun(RootCmd, args)
+		assert.NoErrorf(t, err, "notifications command should not return an error:%s", err)
+		assert.NotEmpty(t, out, "notifications command should not return an empty string")
+		assert.Containsf(t, out, "0 notifications pending", "notifications command should not contain a notification")
+		assert.Containsf(t, out, "ignoring notification: LOWBAT", "ignore should be mentioned")
+		assert.Containsf(t, out, "OK", "notifications command should  have OK")
+		assert.Containsf(t, out, "IGNORED:", "output should contain IGNORED:")
 		t.Log(out)
 	})
 }

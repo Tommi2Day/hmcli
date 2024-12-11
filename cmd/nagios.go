@@ -68,7 +68,7 @@ func NagiosResult(status string, output string, longOutput string, perfdata []na
 	}
 	sl := nagios.SupportedStateLabels()
 	status = sl[p.ExitStatusCode]
-	log.Debugf("Result: %s:%s", status, output)
+	log.Debugf("Result: %s:%s\n%s\n", status, output, longOutput)
 	return p
 }
 
