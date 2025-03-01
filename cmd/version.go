@@ -35,13 +35,13 @@ func init() {
 }
 
 // GetVersion extract compiled version info
-func GetVersion(print bool) (txt string) {
+func GetVersion(doPrint bool) (txt string) {
 	name := Name
 	commit := Commit
 	version := Version
 	date := Date
 	txt = fmt.Sprintf("%s version %s (%s - %s)", name, version, commit, date)
-	if print {
+	if doPrint {
 		fmt.Println(txt)
 	}
 	return

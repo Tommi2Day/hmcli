@@ -1,13 +1,20 @@
 # Changelog hmcli
 
+## [v1.4.1 - 2025-03-01]
+### Changed
+- update dependencies
+- update goreleaser
+### Fixed
+- linter issue
+
 ## [v1.4.0 - 2024-12-11]
-### new
+### New
 - notifications: add print ignored flag
 
 ## [v1.3.0 - 2024-12-04]
-### new
+### New
 - add show-threshold flag
-### changed
+### Changed
 - update dependencies
 
 ## [v1.2.4 - 2024-10-03]
