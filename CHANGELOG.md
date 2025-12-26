@@ -1,5 +1,12 @@
 # Changelog hmcli
 
+## [v1.4.2 - 2025-12-26]
+### Changed
+- use Go1.25
+- update dependencies
+- use golangci-lint v2
+- update workflows
+
 ## [v1.4.1 - 2025-03-01]
 ### Changed
 - update dependencies
