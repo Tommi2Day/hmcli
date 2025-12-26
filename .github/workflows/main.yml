@@ -2,19 +2,9 @@ name: CI
 
 on: [push]
 
-# env:
-#  SKIP_LDAP: true
-#  SKIP_MAIL: true
-#  SKIP_ORACLE: true
-#  SKIP_COMMIT: true
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
-      dind:
-        image: docker:dind-rootless
-        ports:
-          - 2375:2375
     steps:
       - uses: actions/checkout@v5
       - name: Set up Go
@@ -26,12 +16,6 @@ jobs:
           go mod tidy
           go mod vendor
       - name: Test
-        env:
-          # github copies the files with api, not as clone, check fails
-          # https://github.com/actions/checkout/issues/335
-          SKIP_COMMIT: true
-          # github cannot handle custom resolvers, so skip dns tests
-          SKIP_DNS: true
         run: go test -v ./...  -coverprofile=coverage.txt -covermode=atomic
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
