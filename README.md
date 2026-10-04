@@ -3,7 +3,6 @@
 Tool and Nagios/Icinga check plugin for Homematic/Raspberrymatic based on XMLAPI AddOn
 
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/tommi2day/hmcli)](https://goreportcard.com/report/github.com/tommi2day/hmcli)
 ![CI](https://github.com/tommi2day/hmcli/actions/workflows/main.yml/badge.svg)
 [![codecov](https://codecov.io/gh/Tommi2Day/hmcli/branch/main/graph/badge.svg?token=3EBK75VLC8)](https://codecov.io/gh/Tommi2Day/hmcli)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/tommi2day/hmcli)
