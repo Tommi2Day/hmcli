@@ -1,5 +1,12 @@
 # Changelog hmcli
 
+## [v1.4.3 - 2026-10-06]
+### Changed
+- update dependencies and GitHub Actions workflows
+- use Go 1.26
+### Fixed
+- use platform-specific home directory paths for configuration
+
 ## [v1.4.2 - 2025-12-26]
 ### Changed
 - use Go1.25
