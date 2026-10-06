@@ -13,11 +13,11 @@ import (
 )
 
 var datapointCmd = &cobra.Command{
-	Use:   "datapoint",
+	Use:   commandDatapoint,
 	Short: "command related to datapoints",
 }
 var datapointListCmd = &cobra.Command{
-	Use:          "list",
+	Use:          commandList,
 	Short:        "List all data points for a device",
 	Long:         ``,
 	SilenceUsage: true,
@@ -25,7 +25,7 @@ var datapointListCmd = &cobra.Command{
 }
 
 var datapointCheckCmd = &cobra.Command{
-	Use:   "check",
+	Use:   commandCheck,
 	Short: "check a single datapoint",
 	Long: `select a single datapoint by name or id and check its value
 You can set -w or -c to set the warning or critical threshold on numeric values`,
@@ -92,7 +92,7 @@ func printDatapointList(m string) (count int, err error) {
 	for _, d := range stateListResponse.StateDevices {
 		for _, c := range d.Channels {
 			for _, dp := range c.Datapoints {
-				if m != "" && !re.MatchString(dp.Name) {
+				if re != nil && !re.MatchString(dp.Name) {
 					continue
 				}
 				count++
@@ -219,6 +219,6 @@ func datapointCheck(cmd *cobra.Command, _ []string) error {
 		log.Debugf("value %s matches regexp %s", dp.Value, m)
 	}
 	// set final nagios state
-	NagiosResult("OK", output, longOutput, performanceData)
+	NagiosResult(stateOK, output, longOutput, performanceData)
 	return nil
 }

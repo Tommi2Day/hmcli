@@ -6,6 +6,7 @@
 - use Go 1.26
 ### Fixed
 - use platform-specific home directory paths for configuration
+- linter issues
 
 ## [v1.4.2 - 2025-12-26]
 ### Changed

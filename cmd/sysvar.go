@@ -12,11 +12,11 @@ import (
 )
 
 var sysvarsCmd = &cobra.Command{
-	Use:   "sysvar",
+	Use:   commandSysvar,
 	Short: "command related to system variables",
 }
 var sysvarListCmd = &cobra.Command{
-	Use:          "list",
+	Use:          commandList,
 	Short:        "List all system variables",
 	Long:         ``,
 	SilenceUsage: true,
@@ -24,7 +24,7 @@ var sysvarListCmd = &cobra.Command{
 }
 
 var sysvarCheckCmd = &cobra.Command{
-	Use:   "check",
+	Use:   commandCheck,
 	Short: "check a single system variable",
 	Long: `select a single system variable by name or id and check its value
 You can set -w or -c to set the warning or critical threshold on numeric values`,
@@ -160,7 +160,7 @@ func getSysVar(n string, i string) (entry hmlib.SysVarEntry, err error) {
 }
 func checkMatch(name string, v string, m string) (status string, output string) {
 	// check match value
-	status = "OK"
+	status = stateOK
 	re, err := regexp.Compile(m)
 	if err != nil {
 		output = fmt.Sprintf("UNKNOWN: regexp compile %s failed: %s", m, err)

@@ -31,9 +31,9 @@ func TestRssi(t *testing.T) {
 
 	t.Run("Rssi cmd", func(t *testing.T) {
 		args := []string{
-			"rssi",
-			"--debug",
-			"--unit-test",
+			commandRSSI,
+			flagDebug,
+			flagUnitTest,
 		}
 
 		out, err := common.CmdRun(RootCmd, args)

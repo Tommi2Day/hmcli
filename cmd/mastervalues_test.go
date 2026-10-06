@@ -37,10 +37,10 @@ func TestMasterValues(t *testing.T) {
 
 	t.Run("MasterValue list NoId", func(t *testing.T) {
 		args := []string{
-			"mastervalues",
-			"list",
-			"--debug",
-			"--unit-test",
+			commandMastervalues,
+			commandList,
+			flagDebug,
+			flagUnitTest,
 		}
 		out, err := common.CmdRun(RootCmd, args)
 		assert.Errorf(t, err, "mastervalues command should return an error")
@@ -49,11 +49,11 @@ func TestMasterValues(t *testing.T) {
 	})
 	t.Run("MasterValue list", func(t *testing.T) {
 		args := []string{
-			"mastervalues",
-			"list",
-			"--id", "4740, 4763",
-			"--debug",
-			"--unit-test",
+			commandMastervalues,
+			commandList,
+			flagID, "4740, 4763",
+			flagDebug,
+			flagUnitTest,
 		}
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "mastervalues command should not return an error:%s", err)
@@ -64,13 +64,13 @@ func TestMasterValues(t *testing.T) {
 	})
 	t.Run("MasterValue Check", func(t *testing.T) {
 		args := []string{
-			"mastervalues",
-			"check",
-			"--id", "4763",
-			"--name", "MIN_INTERVAL",
-			"--warn", "1",
-			"--debug",
-			"--unit-test",
+			commandMastervalues,
+			commandCheck,
+			flagID, "4763",
+			flagName, testMastervalueParameter,
+			flagWarn, "1",
+			flagDebug,
+			flagUnitTest,
 		}
 		p := nagios.NewPlugin()
 		p.SkipOSExit()
@@ -87,13 +87,13 @@ func TestMasterValues(t *testing.T) {
 	})
 	t.Run("MasterValue match Check", func(t *testing.T) {
 		args := []string{
-			"mastervalues",
-			"check",
-			"--id", "4763",
-			"--name", "MIN_INTERVAL",
-			"--match", "[^\\d+]",
-			"--debug",
-			"--unit-test",
+			commandMastervalues,
+			commandCheck,
+			flagID, "4763",
+			flagName, testMastervalueParameter,
+			flagMatch, "[^\\d+]",
+			flagDebug,
+			flagUnitTest,
 		}
 		p := nagios.NewPlugin()
 		p.SkipOSExit()
@@ -110,12 +110,12 @@ func TestMasterValues(t *testing.T) {
 	})
 	t.Run("MasterValue wrong id Check", func(t *testing.T) {
 		args := []string{
-			"mastervalues",
-			"check",
-			"--id", "4743",
-			"--name", "MIN_INTERVAL",
-			"--debug",
-			"--unit-test",
+			commandMastervalues,
+			commandCheck,
+			flagID, "4743",
+			flagName, testMastervalueParameter,
+			flagDebug,
+			flagUnitTest,
 		}
 		p := nagios.NewPlugin()
 		p.SkipOSExit()

@@ -14,7 +14,7 @@ import (
 )
 
 var notificationsCmd = &cobra.Command{
-	Use:     "notifications",
+	Use:     commandNotifications,
 	Aliases: []string{"notification"},
 	Short:   "check hmWarnThreshold notifications",
 	Long: `List all current notifications. 
@@ -114,7 +114,7 @@ func processNotifications(notifications hmlib.SystemNotificationResponse, reIgno
 
 	perfdata := []nagios.PerformanceData{
 		{
-			Label: "notifications",
+			Label: commandNotifications,
 			Value: fmt.Sprintf("%d", notificationCount),
 			Warn:  hmWarnThreshold,
 			Crit:  hmCritThreshold,

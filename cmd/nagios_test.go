@@ -16,16 +16,16 @@ func TestNagios(t *testing.T) {
 		perfdata       []nagios.PerformanceData
 		expectedStatus int
 	}{
-		{"nagiosOK", "OK", nil, nagios.StateOKExitCode},
+		{"nagiosOK", stateOK, nil, nagios.StateOKExitCode},
 		{"nagiosWarn", "WARNING", nil, nagios.StateWARNINGExitCode},
 		{"nagiosCrtit", "CRITICAL", nil, nagios.StateCRITICALExitCode},
 		{"nagiosUnknown", "UNKNOWN", nil, nagios.StateUNKNOWNExitCode},
 		{"nagiosNoStatus", "", nil, nagios.StateUNKNOWNExitCode},
 		{"nagiosPerfCritical", "",
-			[]nagios.PerformanceData{{Label: "Test", Value: "100", UnitOfMeasurement: "", Warn: "~:9", Crit: "99", Min: "0", Max: "1000"}},
+			[]nagios.PerformanceData{{Label: performanceTestLabel, Value: "100", UnitOfMeasurement: "", Warn: "~:9", Crit: "99", Min: "0", Max: "1000"}},
 			nagios.StateCRITICALExitCode},
 		{"nagiosPerfWarning", "",
-			[]nagios.PerformanceData{{Label: "Test", Value: "3", Warn: "1", Crit: "10"}},
+			[]nagios.PerformanceData{{Label: performanceTestLabel, Value: "3", Warn: "1", Crit: "10"}},
 			nagios.StateWARNINGExitCode},
 	}
 

@@ -11,7 +11,7 @@ import (
 
 var (
 	versionCmd = &cobra.Command{
-		Use:   "version",
+		Use:   commandVersion,
 		Short: "version print version string",
 		Long:  ``,
 		Run: func(_ *cobra.Command, _ []string) {

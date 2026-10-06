@@ -30,10 +30,10 @@ func TestDevices(t *testing.T) {
 		fakeURL := MockURL + hmlib.DeviceListEndpoint
 		httpmock.RegisterResponder("GET", fakeURL, responder)
 		args := []string{
-			"device",
-			"list",
-			"--debug",
-			"--unit-test",
+			commandDevice,
+			commandList,
+			flagDebug,
+			flagUnitTest,
 		}
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "deviceList command should not return an error:%s", err)
@@ -47,11 +47,11 @@ func TestDevices(t *testing.T) {
 		fakeURL := MockURL + hmlib.DeviceListEndpoint
 		httpmock.RegisterResponder("GET", fakeURL, responder)
 		args := []string{
-			"device",
-			"list",
-			"--name", "Bewegungsmelder Garage",
-			"--debug",
-			"--unit-test",
+			commandDevice,
+			commandList,
+			flagName, "Bewegungsmelder Garage",
+			flagDebug,
+			flagUnitTest,
 		}
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "deviceList command should not return an error:%s", err)
@@ -67,11 +67,11 @@ func TestDevices(t *testing.T) {
 		fakeURL := MockURL + hmlib.DeviceListEndpoint
 		httpmock.RegisterResponder("GET", fakeURL, responder)
 		args := []string{
-			"device",
-			"list",
-			"--id", "4740",
-			"--debug",
-			"--unit-test",
+			commandDevice,
+			commandList,
+			flagID, "4740",
+			flagDebug,
+			flagUnitTest,
 		}
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "deviceList command should not return an error:%s", err)
@@ -87,11 +87,11 @@ func TestDevices(t *testing.T) {
 		fakeURL := MockURL + hmlib.DeviceListEndpoint
 		httpmock.RegisterResponder("GET", fakeURL, responder)
 		args := []string{
-			"device",
-			"list",
+			commandDevice,
+			commandList,
 			"--address", "000955699D3D84",
-			"--debug",
-			"--unit-test",
+			flagDebug,
+			flagUnitTest,
 		}
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "deviceList command should not return an error:%s", err)

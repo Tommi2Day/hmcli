@@ -9,12 +9,12 @@ import (
 )
 
 var devicesCmd = &cobra.Command{
-	Use:     "device",
+	Use:     commandDevice,
 	Aliases: []string{"devices"},
 	Short:   "command related to devices",
 }
 var deviceListCmd = &cobra.Command{
-	Use:          "list",
+	Use:          commandList,
 	Short:        "list devices",
 	Long:         `list all devices or a specify one`,
 	SilenceUsage: true,

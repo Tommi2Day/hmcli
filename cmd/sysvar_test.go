@@ -34,10 +34,10 @@ func TestSysvar(t *testing.T) {
 		fakeURL := hmURL + hmlib.SysVarListEndpoint
 		httpmock.RegisterResponder("GET", fakeURL, responder)
 		args := []string{
-			"sysvar",
-			"list",
-			"--debug",
-			"--unit-test",
+			commandSysvar,
+			commandList,
+			flagDebug,
+			flagUnitTest,
 		}
 		out, err := common.CmdRun(RootCmd, args)
 
@@ -58,12 +58,12 @@ func TestSysvar(t *testing.T) {
 		fakeURL := hmURL + hmlib.SysVarEndpoint
 		httpmock.RegisterResponder("GET", fakeURL, responder)
 		args := []string{
-			"sysvar",
-			"check",
-			"--debug",
-			"--unit-test",
-			"--id", "8254",
-			"--match", "xxx",
+			commandSysvar,
+			commandCheck,
+			flagDebug,
+			flagUnitTest,
+			flagID, "8254",
+			flagMatch, "xxx",
 		}
 
 		p := nagios.NewPlugin()
@@ -88,12 +88,12 @@ func TestSysvar(t *testing.T) {
 		fakeURL := hmURL + hmlib.SysVarEndpoint
 		httpmock.RegisterResponder("GET", fakeURL, responder)
 		args := []string{
-			"sysvar",
-			"check",
-			"--debug",
-			"--unit-test",
-			"--id", "8254",
-			"--warn", "5",
+			commandSysvar,
+			commandCheck,
+			flagDebug,
+			flagUnitTest,
+			flagID, "8254",
+			flagWarn, "5",
 		}
 
 		p := nagios.NewPlugin()

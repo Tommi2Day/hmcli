@@ -13,11 +13,11 @@ import (
 
 var valueCmd = &cobra.Command{
 	Use:     "value",
-	Aliases: []string{"values", "mastervalue", "mastervalues"},
+	Aliases: []string{"values", "mastervalue", commandMastervalues},
 	Short:   "command related to device master values",
 }
 var valueListCmd = &cobra.Command{
-	Use:   "list",
+	Use:   commandList,
 	Short: "",
 	Long: `List for a given device all mastervalues  or a named value. 
 Address or id must be given  `,
@@ -26,7 +26,7 @@ Address or id must be given  `,
 }
 
 var valueCheckCmd = &cobra.Command{
-	Use:   "check",
+	Use:   commandCheck,
 	Short: "check a single device Value",
 	Long: `this retrives a given device mastervalue and may check if it contains a string (-m)
 You can set -w or -c to set the warning or critical threshold on numeric values`,
@@ -262,6 +262,6 @@ func mastervalueCheck(cmd *cobra.Command, _ []string) error {
 		log.Debugf("value %s matches regexp %s", v, m)
 	}
 	// set final nagios state
-	NagiosResult("OK", output, longOutput, performanceData)
+	NagiosResult(stateOK, output, longOutput, performanceData)
 	return nil
 }

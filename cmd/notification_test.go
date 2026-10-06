@@ -37,10 +37,10 @@ func TestNotifications(t *testing.T) {
 
 	t.Run("notifications cmd", func(t *testing.T) {
 		args := []string{
-			"notifications",
-			"--debug",
-			"--warn", "0",
-			"--unit-test",
+			commandNotifications,
+			flagDebug,
+			flagWarn, "0",
+			flagUnitTest,
 		}
 		p := nagios.NewPlugin()
 		SetPlugin(p)
@@ -54,11 +54,11 @@ func TestNotifications(t *testing.T) {
 	})
 	t.Run("notifications cmd with ignore", func(t *testing.T) {
 		args := []string{
-			"notifications",
-			"--debug",
-			"--warn", "0",
-			"--ignore", "LOW_BAT",
-			"--unit-test",
+			commandNotifications,
+			flagDebug,
+			flagWarn, "0",
+			flagIgnore, testIgnoredNotification,
+			flagUnitTest,
 		}
 		p := nagios.NewPlugin()
 		SetPlugin(p)
@@ -74,11 +74,11 @@ func TestNotifications(t *testing.T) {
 	})
 	t.Run("notifications cmd with printed ignore", func(t *testing.T) {
 		args := []string{
-			"notifications",
-			"--debug",
-			"--warn", "0",
-			"--ignore", "LOW_BAT",
-			"--unit-test",
+			commandNotifications,
+			flagDebug,
+			flagWarn, "0",
+			flagIgnore, testIgnoredNotification,
+			flagUnitTest,
 			"--print",
 		}
 		p := nagios.NewPlugin()

@@ -31,10 +31,10 @@ func TestDatapoint(t *testing.T) {
 		fakeURL := MockURL + hmlib.StateListEndpoint
 		httpmock.RegisterResponder("GET", fakeURL, responder)
 		args := []string{
-			"datapoint",
-			"list",
-			"--debug",
-			"--unit-test",
+			commandDatapoint,
+			commandList,
+			flagDebug,
+			flagUnitTest,
 		}
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "datapoint List command should not return an error:%s", err)
@@ -48,11 +48,11 @@ func TestDatapoint(t *testing.T) {
 		fakeURL := MockURL + hmlib.StateListEndpoint
 		httpmock.RegisterResponder("GET", fakeURL, responder)
 		args := []string{
-			"datapoint",
-			"list",
-			"--match", "CONFIG_PENDING",
-			"--debug",
-			"--unit-test",
+			commandDatapoint,
+			commandList,
+			flagMatch, "CONFIG_PENDING",
+			flagDebug,
+			flagUnitTest,
 		}
 		out, err := common.CmdRun(RootCmd, args)
 		assert.NoErrorf(t, err, "datapoint List command should not return an error:%s", err)
@@ -64,12 +64,12 @@ func TestDatapoint(t *testing.T) {
 
 	t.Run("datapoint Check", func(t *testing.T) {
 		args := []string{
-			"datapoint",
-			"check",
-			"--id", "7799",
-			"--warn", "100",
-			"--debug",
-			"--unit-test",
+			commandDatapoint,
+			commandCheck,
+			flagID, "7799",
+			flagWarn, "100",
+			flagDebug,
+			flagUnitTest,
 		}
 		p := nagios.NewPlugin()
 		p.SkipOSExit()
@@ -86,12 +86,12 @@ func TestDatapoint(t *testing.T) {
 	})
 	t.Run("datapoint per name match Check", func(t *testing.T) {
 		args := []string{
-			"datapoint",
-			"check",
-			"--name", "HmIP-RF.000955699D3D84:0.CONFIG_PENDING",
-			"--match", "true",
-			"--debug",
-			"--unit-test",
+			commandDatapoint,
+			commandCheck,
+			flagName, "HmIP-RF.000955699D3D84:0.CONFIG_PENDING",
+			flagMatch, "true",
+			flagDebug,
+			flagUnitTest,
 		}
 		p := nagios.NewPlugin()
 		p.SkipOSExit()
@@ -108,11 +108,11 @@ func TestDatapoint(t *testing.T) {
 	})
 	t.Run("datapoint wrong id Check", func(t *testing.T) {
 		args := []string{
-			"datapoint",
-			"check",
-			"--id", "4743",
-			"--debug",
-			"--unit-test",
+			commandDatapoint,
+			commandCheck,
+			flagID, "4743",
+			flagDebug,
+			flagUnitTest,
 		}
 		p := nagios.NewPlugin()
 		p.SkipOSExit()

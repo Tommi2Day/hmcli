@@ -9,7 +9,7 @@ import (
 )
 
 var rssiCmd = &cobra.Command{
-	Use:          "rssi",
+	Use:          commandRSSI,
 	Short:        "list rssi values",
 	Long:         `List available rssi values of devices`,
 	SilenceUsage: true,
