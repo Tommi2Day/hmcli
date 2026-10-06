@@ -3,10 +3,10 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 	"time"
-
-	"github.com/ory/dockertest/v3/docker/pkg/homedir"
 
 	"github.com/tommi2day/gomodules/common"
 	"github.com/tommi2day/gomodules/hmlib"
@@ -76,11 +76,16 @@ func Execute() {
 func initConfig() {
 	viper.SetConfigType(configType)
 	viper.SetConfigName(configName)
-	home := homedir.Get()
+	home, err := os.UserHomeDir()
+	if err != nil {
+		log.Warnf("could not determine home directory: %v", err)
+	}
 	if cfgFile == "" {
 		// Search config in /etc/nagios-plugins/config $HOME/.hmcli and current directory.
 		viper.AddConfigPath(".")
-		viper.AddConfigPath(home + "/.hmcli")
+		if home != "" {
+			viper.AddConfigPath(filepath.Join(home, ".hmcli"))
+		}
 		viper.AddConfigPath("/etc/nagios-plugins/config")
 	} else {
 		// set filename form cli
