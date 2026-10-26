@@ -4,6 +4,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"os/user"
 	"path/filepath"
 	"strings"
 	"time"
@@ -78,7 +79,12 @@ func initConfig() {
 	viper.SetConfigName(configName)
 	home, err := os.UserHomeDir()
 	if err != nil {
-		log.Warnf("could not determine home directory: %v", err)
+		// $HOME is not set, e.g. when started by Nagios/Icinga. Fall back to the user database
+		if u, uErr := user.Current(); uErr == nil {
+			home = u.HomeDir
+		} else {
+			log.Debugf("could not determine home directory: %v", err)
+		}
 	}
 	if cfgFile == "" {
 		// Search config in /etc/nagios-plugins/config $HOME/.hmcli and current directory.

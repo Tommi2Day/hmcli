@@ -1,5 +1,13 @@
 # Changelog hmcli
 
+## [v1.4.4 - 2026-10-26]
+### New
+- add apk package format
+### Changed
+- update dependencies
+### Fixed
+- fall back to the user database home directory if `$HOME` is not set, avoiding the "could not determine home directory" warning
+
 ## [v1.4.3 - 2026-10-06]
 ### Changed
 - update dependencies and GitHub Actions workflows
